@@ -10,39 +10,7 @@ creation date: 21-01-2024
 last modification date: 21-01-2024
 ---
 
-# Universidad de Guadalajara
-
-## <center>Centro Universitario de Ciencias Exactas e Ingenierías</center>
-
-![Portada-UDG | left | 200](./../../attachments/images/portada-udg.webp) ![Portada-CUCEI | right | 200](./../../attachments/images/portada-cucei.webp)
-
-<br><br><br><br> <br><br><br><br> <br><br><br><br> <br><br><br><br> <br>
-
-### Investigación 1: Bases de Datos
-
-### Carrera: Ingeniería en Cómputo
-
-### Materia: Bases de Datos
-
-### Estudiante: Juárez Rubio Alan Yahir
-
-### Profesora: Perez Torres, Griselda
-
-### NRC: 204860
-
-### Sección: D07
-
-### Calendario: 2024-A
-
-### Fecha de entrega: 21-01-2024
-
-### Fecha límite de entrega: 21-01-2024
-
-<div style="page-break-after: always;"></div>
-
-
 # Bases de Datos
-
 
 Una **Base de Datos** (BD) es un sistema electrónico encargado de recopilar y organizar información. Estos alamacenan datos de personas, productos, pedidos, documentos, imágenes, etc.
 
