@@ -26,6 +26,7 @@ templater
 *.xlsx
 *.ppt
 *.pptx
+*.pdf
 *.csv 
 *.kdbx
 
