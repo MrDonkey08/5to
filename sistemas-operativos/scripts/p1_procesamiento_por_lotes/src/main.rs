@@ -40,7 +40,7 @@ fn main() {
 
         processes[n].set_username();
 
-        println!("Math Expression: ");
+        print!("Math Expression: ");
         io::stdout().flush().expect("Failed to flush stdout");
         processes[n].set_math_exp();
 
@@ -51,12 +51,35 @@ fn main() {
     screen::sys_clear();
 
     let mut k = 0;
+    let mut l = 0;
+    let mut time: Vec<u64> = Vec::new();
 
     for i in 0..batches {
-        println!("Batch in execution: {} de {}\n", i+1, batches);
+
+        // Calculation of Batch Times
+
+        time.push(0);
+
+        if l < int_num_process - batches_res {
+            for j in l..LOTE+k {
+                time[i] += processes[j].get_exe_time();
+                l=j+1;
+            }
+        } else if batches_res > 0 {
+            for j in l..int_num_process {
+                time[i] += processes[j].get_exe_time();
+                l=j+1;
+            }
+        }
+
+        // Current Bath
+
+        working_batch(&processes, &time, i, batches);
+
+
+        // Processes in Execution
 
         if k < int_num_process - batches_res {
-            println!("Es VERDADERO");
             for j in k..LOTE+k {
                 finished_processes(&processes, j, k);
                 k=j+1;
@@ -76,12 +99,22 @@ fn main() {
 
 }
 
-fn finished_processes(arr : &[process::Process; MAX], j : usize, k : usize){
+fn working_batch(arr : &[process::Process; MAX], arr_2: &Vec<u64>, i : usize, batches : usize) {
+    println!("Batch in execution: {} de {}\n", i+1, batches);
+    println!("Estimated execution time {}\n\n", arr_2[i]);
+}
+
+fn working_processes(arr : &[process::Process; MAX], j : usize, k : usize) {
+    println!("Nombre: {}", arr[j].get_username());
+    println!("Estimated execution time {}\n\n", arr[j].get_exe_time());
+}
+
+fn finished_processes(arr : &[process::Process; MAX], j : usize, k : usize) {
     println!("Programa: {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
     println!("Operation: {}", arr[j].get_math_exp());
     println!("Estimated execution time {}\n\n", (arr[j].get_exe_time()));
-    thread::sleep(Duration::from_secs(arr[j].get_exe_time())); 
+    thread::sleep(Duration::from_secs(arr[j].get_exe_time()));
 }
 
 fn get_result(){
