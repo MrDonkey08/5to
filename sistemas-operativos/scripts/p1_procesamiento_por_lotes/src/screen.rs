@@ -1,7 +1,7 @@
 use std::process::Command;
 use std::io::{self, Write};
 
-fn sys_clear() {
+pub fn sys_clear() {
     if cfg!(target_os = "windows") {
         let _ = Command::new("cmd").arg("/c").arg("cls").status();
     } else {
@@ -9,7 +9,7 @@ fn sys_clear() {
     }
 }
 
-fn sys_pause() {
+pub fn sys_pause() {
     println!("Press Enter to continue...");
     let _ = io::stdout().flush();
     let _ = io::stdin().read_line(&mut String::new());

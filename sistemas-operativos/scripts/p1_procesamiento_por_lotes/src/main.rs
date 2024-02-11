@@ -3,12 +3,16 @@ mod screen;
 //mod screen;
 
 use regex::Regex;
+use rand::Rng;
 use std::io::{self, Write};
 use std::process::Command;
+use std::thread;
+use std::time::Duration;
+
+const LOTE: usize = 4;
+const MAX: usize = 30;
 
 fn main() {
-    const LOTE : usize = 4;
-
     println!("Welcome to the Process Simulator\n");
     print!("Enter the number of process to execute: ");
     io::stdout().flush().expect("Failed to flush stdout");
@@ -20,11 +24,13 @@ fn main() {
 
     let mut int_num_process : usize = num_process.trim().parse().unwrap();
 
-    let mut batches : usize = int_num_process / LOTE + if int_num_process % LOTE != 0 { 1 } else { 0 };
+    let batches_res : usize = int_num_process % LOTE;
+    let batches_cos : usize = int_num_process / LOTE;
+    let mut batches : usize = batches_cos + if batches_res != 0 { 1 } else { 0 };
 
     println!("Bacth: {batches}");
 
-    let mut processes : [process::Process; 30] = Default::default();
+    let mut processes : [process::Process; MAX] = Default::default();
 
     for n in 0..int_num_process {
         println!("Process: {} of {}", n+1, num_process);
@@ -37,15 +43,45 @@ fn main() {
         println!("Math Expression: ");
         io::stdout().flush().expect("Failed to flush stdout");
         processes[n].set_math_exp();
+
+        processes[n].set_exe_time(rand::thread_rng().gen_range(1..=3));
     }
 
-    sys_pause();
-    sys_clear();
-    
-    loop {
-        
+    screen::sys_pause();
+    screen::sys_clear();
+
+    let mut k = 0;
+
+    for i in 0..batches {
+        println!("Batch in execution: {} de {}\n", i+1, batches);
+
+        if k < int_num_process - batches_res {
+            println!("Es VERDADERO");
+            for j in k..LOTE+k {
+                finished_processes(&processes, j, k);
+                k=j+1;
+            }
+        } else if batches_res > 0 {
+            for j in k..int_num_process {
+                finished_processes(&processes, j, k);
+                k=j+1;
+            }
+        }
+
+        println!("-----------------------------------------------------------------------");
+
+        //screen::sys_pause();
+        //screen::sys_clear();
     }
 
+}
+
+fn finished_processes(arr : &[process::Process; MAX], j : usize, k : usize){
+    println!("Programa: {}", k+1);
+    println!("Nombre: {}", arr[j].get_username());
+    println!("Operation: {}", arr[j].get_math_exp());
+    println!("Estimated execution time {}\n\n", (arr[j].get_exe_time()));
+    thread::sleep(Duration::from_secs(arr[j].get_exe_time())); 
 }
 
 fn get_result(){

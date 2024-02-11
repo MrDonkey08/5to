@@ -6,7 +6,7 @@ pub struct Process {
     username: String,
     math_exp: String,
     ans_exp: i32,
-    exe_time: f32,
+    exe_time: u64,
 }
 
 impl Process {
@@ -25,7 +25,8 @@ impl Process {
     pub fn set_username(&mut self) {
         io::stdin()
             .read_line(&mut self.username)
-            .expect("Failed to read line"); 
+            .expect("Failed to read line");
+        self.username = self.username.trim().to_string();
     }
 
     pub fn get_math_exp(&self) -> &str {
@@ -35,7 +36,8 @@ impl Process {
     pub fn set_math_exp(&mut self) {
         io::stdin()
             .read_line(&mut self.math_exp)
-            .expect("Failed to read line"); 
+            .expect("Failed to read line");
+        self.math_exp = self.math_exp.trim().to_string();
     }
 
     pub fn get_ans_exp(&self) -> i32 {
@@ -46,17 +48,11 @@ impl Process {
         return self.ans_exp = value;
     }
 
-    pub fn get_exe_time(&self) -> f32 {
+    pub fn get_exe_time(&self) -> u64 {
         return self.exe_time;
     }
 
-    pub fn set_exe_time(&mut self, value: f32) {
+    pub fn set_exe_time(&mut self, value: u64) {
         return self.exe_time = value;
     }
-
-
-
-
-
 }
-
