@@ -1,32 +1,25 @@
+use crate::reg_cal;
+
+use regex::Regex;
 use std::io::{self, Write}; // Importing io and Write trait
 
 #[derive(Default, Debug)]
 pub struct Process {
-    id: i8,
     username: String,
     math_exp: String,
-    ans_exp: i32,
+    ans_exp: String,
     exe_time: u64,
 }
 
 impl Process {
     // Method to create a new instance of Process
-    pub fn new(id: i8, username: String, math_exp: String, ans_exp: i32, exe_time: u64) -> Self {
+    pub fn new(username: String, math_exp: String, ans_exp: String, exe_time: u64) -> Self {
         Process {
-            id,
             username,
             math_exp,
             ans_exp,
             exe_time,
         }
-    }
-
-    pub fn get_id(&self) -> i8 {
-        return self.id;
-    }
-
-    pub fn set_id(&mut self, value: i8) {
-        self.id = value;
     }
 
     pub fn get_username(&self) -> &str {
@@ -51,12 +44,33 @@ impl Process {
         self.math_exp = self.math_exp.trim().to_string();
     }
 
-    pub fn get_ans_exp(&self) -> i32 {
-        return self.ans_exp;
+    pub fn get_ans_exp(&self) -> &str {
+        return &self.ans_exp;
     }
 
-    pub fn set_ans_exp(&mut self, value: i32) {
-        return self.ans_exp = value;
+    pub fn set_ans_exp(&mut self) {
+        io::stdin()
+            .read_line(&mut self.ans_exp)
+            .expect("Failed to read line");
+        self.ans_exp = self.ans_exp.trim().to_string();
+    }
+
+    pub fn calculate_ans_exp(&mut self) {
+        // Regex
+
+        let re_add = Regex::new(r"(\d+)\s?\+\s?(\d+)").unwrap();
+        let re_sub = Regex::new(r"(\d+)\s?\-\s?(\d+)").unwrap();
+        let re_mul = Regex::new(r"(\d+)\s?\*\s?(\d+)").unwrap();
+        let re_div = Regex::new(r"(\d+)\s?/\s?(\d+)").unwrap();
+
+        let mut input = self.math_exp.clone();
+
+        input = reg_cal::math_operation(re_mul, input.clone(), "*");
+        input = reg_cal::math_operation(re_div, input.clone(), "/");
+        input = reg_cal::math_operation(re_add, input.clone(), "+");
+        input = reg_cal::math_operation(re_sub, input.clone(), "-");
+
+        self.ans_exp = input.clone();
     }
 
     pub fn get_exe_time(&self) -> u64 {
@@ -64,6 +78,6 @@ impl Process {
     }
 
     pub fn set_exe_time(&mut self, value: u64) {
-        return self.exe_time = value;
+        self.exe_time = value;
     }
 }

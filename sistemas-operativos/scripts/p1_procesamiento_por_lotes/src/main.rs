@@ -1,6 +1,6 @@
 mod process;
 mod screen;
-//mod screen;
+mod reg_cal;
 
 use regex::Regex;
 use rand::Rng;
@@ -33,7 +33,7 @@ fn main() {
     //let mut processes : [process::Process; MAX] = Default::default();
 
     for n in 0..int_num_process {
-        processes.push(process::Process::new(0, String::from(""), String::from(""), 0, 0));
+        processes.push(process::Process::new(String::from(""), String::from(""), String::from(""), 0));
 
         println!("Process: {} of {}", n+1, num_process);
 
@@ -78,20 +78,24 @@ fn main() {
 
         working_batch(&processes, &time, i, batches);
 
-
         // Processes in Execution
 
         if k < int_num_process - batches_res {
             for j in k..LOTE+k {
+                processes[j].calculate_ans_exp();
                 working_processes(&processes, i, j, k, &time);
                 time[i] -= processes[j].get_exe_time();
-                println!("Tiime left: {}µs\n\n", time[i]);
+                println!("Time left: {}µs\n\n", time[i]);
+                processes[j].get_math_exp();
+                //processes[j].set_ans_exp(get_result(processes[j].get_math_exp()));
                 k=j+1;
             }
         } else if batches_res > 0 {
             for j in k..int_num_process {
+                processes[j].calculate_ans_exp();
                 working_processes(&processes, i, j, k, &time);
                 time[i] -= processes[j].get_exe_time();
+                //processes[j].set_ans_exp(get_result(processes[j].get_math_exp()));
                 println!("Time left: {}µs\n\n ", time[i]);
                 k=j+1;
             }
@@ -119,54 +123,7 @@ fn working_processes(arr : &Vec<process::Process>, i: usize, j : usize, k : usiz
     println!("Programa: {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
     println!("Estimated execution time {}µs", (arr[j].get_exe_time()));
-    println!("Operation: {}", arr[j].get_math_exp());
+    println!("Operation: {} = {}", arr[j].get_math_exp(), arr[j].get_ans_exp());
     let duration = start.elapsed();
     println!("Time elapsed: is: {:?}", duration);
-}
-
-fn get_result(){
-    // Regex
-
-    let re_add = Regex::new(r"(\d+)\s?\+\s?(\d+)").unwrap();
-    let re_sub = Regex::new(r"(\d+)\s?\-\s?(\d+)").unwrap();
-    let re_mul = Regex::new(r"(\d+)\s?\*\s?(\d+)").unwrap();
-    let re_div = Regex::new(r"(\d+)\s?/\s?(\d+)").unwrap();
-
-    // User input
-
-    println!("Enter an expression to evaluate:");
-    io::stdout().flush().expect("Failed to flush stdout");
-    let mut input = String::new();
-    std::io::stdin().read_line(&mut input).unwrap();
-
-    input = math_operation(re_mul, input.clone(), "*");
-    input = math_operation(re_div, input.clone(), "/");
-    input = math_operation(re_add, input.clone(), "+");
-    input = math_operation(re_sub, input.clone(), "-");
-
-    // Show results
-
-    println!("Result: {}", input);
-}
-
-fn math_operation(expression: Regex, mut operation: String, operator: &str) -> String {
-    loop {
-        let caps = expression.captures(operation.as_str());
-        if caps.is_none() {
-            break;
-        }
-        let caps = caps.unwrap();
-        let caps_expression = caps.get(0).unwrap().as_str();
-        let caps_num1 = caps.get(1).unwrap().as_str().parse::<i32>().unwrap();
-        let caps_num2 = caps.get(2).unwrap().as_str().parse::<i32>().unwrap();
-        let result = match operator {
-            "+" => caps_num1 + caps_num2,
-            "-" => caps_num1 - caps_num2,
-            "*" => caps_num1 * caps_num2,
-            "/" => caps_num1 / caps_num2,
-            _ => 0,
-        };
-        operation = operation.replace(caps_expression, &result.to_string());
-    }
-    operation
 }
