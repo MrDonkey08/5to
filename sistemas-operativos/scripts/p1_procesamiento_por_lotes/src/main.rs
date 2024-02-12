@@ -10,7 +10,6 @@ use std::thread;
 use std::time::Duration;
 
 const LOTE: usize = 4;
-const MAX: usize = 30;
 
 fn main() {
     println!("Welcome to the Process Simulator\n");
@@ -30,9 +29,12 @@ fn main() {
 
     println!("Bacth: {batches}");
 
-    let mut processes : [process::Process; MAX] = Default::default();
+    let mut processes : Vec<process::Process> = Vec::new();
+    //let mut processes : [process::Process; MAX] = Default::default();
 
     for n in 0..int_num_process {
+        processes.push(process::Process::new(0, String::from(""), String::from(""), 0, 0));
+
         println!("Process: {} of {}", n+1, num_process);
 
         print!("Programmer name: ");
@@ -97,19 +99,21 @@ fn main() {
         //screen::sys_clear();
     }
 
+    println!("{:#?}", processes);
+
 }
 
-fn working_batch(arr : &[process::Process; MAX], arr_2: &Vec<u64>, i : usize, batches : usize) {
+fn working_batch(arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
     println!("Batch in execution: {} de {}\n", i+1, batches);
     println!("Estimated execution time {}\n\n", arr_2[i]);
 }
 
-fn working_processes(arr : &[process::Process; MAX], j : usize, k : usize) {
+fn working_processes(arr : &Vec<process::Process>, j : usize, k : usize) {
     println!("Nombre: {}", arr[j].get_username());
     println!("Estimated execution time {}\n\n", arr[j].get_exe_time());
 }
 
-fn finished_processes(arr : &[process::Process; MAX], j : usize, k : usize) {
+fn finished_processes(arr : &Vec<process::Process>, j : usize, k : usize) {
     println!("Programa: {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
     println!("Operation: {}", arr[j].get_math_exp());

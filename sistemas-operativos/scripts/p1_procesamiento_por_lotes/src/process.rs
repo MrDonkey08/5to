@@ -10,6 +10,17 @@ pub struct Process {
 }
 
 impl Process {
+    // Method to create a new instance of Process
+    pub fn new(id: i8, username: String, math_exp: String, ans_exp: i32, exe_time: u64) -> Self {
+        Process {
+            id,
+            username,
+            math_exp,
+            ans_exp,
+            exe_time,
+        }
+    }
+
     pub fn get_id(&self) -> i8 {
         return self.id;
     }
