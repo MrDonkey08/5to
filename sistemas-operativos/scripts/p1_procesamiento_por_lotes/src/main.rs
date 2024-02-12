@@ -7,7 +7,7 @@ use rand::Rng;
 use std::io::{self, Write};
 use std::process::Command;
 use std::thread;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 const LOTE: usize = 4;
 
@@ -46,7 +46,7 @@ fn main() {
         io::stdout().flush().expect("Failed to flush stdout");
         processes[n].set_math_exp();
 
-        processes[n].set_exe_time(rand::thread_rng().gen_range(1..=3));
+        processes[n].set_exe_time(rand::thread_rng().gen_range(1..=50));
     }
 
     screen::sys_pause();
@@ -83,12 +83,16 @@ fn main() {
 
         if k < int_num_process - batches_res {
             for j in k..LOTE+k {
-                finished_processes(&processes, j, k);
+                working_processes(&processes, i, j, k, &time);
+                time[i] -= processes[j].get_exe_time();
+                println!("Tiime left: {}µs\n\n", time[i]);
                 k=j+1;
             }
         } else if batches_res > 0 {
             for j in k..int_num_process {
-                finished_processes(&processes, j, k);
+                working_processes(&processes, i, j, k, &time);
+                time[i] -= processes[j].get_exe_time();
+                println!("Time left: {}µs\n\n ", time[i]);
                 k=j+1;
             }
         }
@@ -98,27 +102,26 @@ fn main() {
         //screen::sys_pause();
         //screen::sys_clear();
     }
-
-    println!("{:#?}", processes);
-
 }
 
 fn working_batch(arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
     println!("Batch in execution: {} de {}\n", i+1, batches);
-    println!("Estimated execution time {}\n\n", arr_2[i]);
-}
-
-fn working_processes(arr : &Vec<process::Process>, j : usize, k : usize) {
-    println!("Nombre: {}", arr[j].get_username());
-    println!("Estimated execution time {}\n\n", arr[j].get_exe_time());
+    println!("Estimated execution time {}µs\n\n", arr_2[i]);
 }
 
 fn finished_processes(arr : &Vec<process::Process>, j : usize, k : usize) {
+    println!("Nombre: {}", arr[j].get_username());
+    println!("Estimated execution time {}µs\n\n", arr[j].get_exe_time());
+}
+
+fn working_processes(arr : &Vec<process::Process>, i: usize, j : usize, k : usize, times : &Vec<u64>) {
+    let start = Instant::now();
     println!("Programa: {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
+    println!("Estimated execution time {}µs", (arr[j].get_exe_time()));
     println!("Operation: {}", arr[j].get_math_exp());
-    println!("Estimated execution time {}\n\n", (arr[j].get_exe_time()));
-    thread::sleep(Duration::from_secs(arr[j].get_exe_time()));
+    let duration = start.elapsed();
+    println!("Time elapsed: is: {:?}", duration);
 }
 
 fn get_result(){
