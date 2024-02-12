@@ -1,7 +1,7 @@
 use crate::reg_cal;
 
 use regex::Regex;
-use std::io::{self, Write}; // Importing io and Write trait
+use std::io::{self}; // Importing io and Write trait
 
 #[derive(Default, Debug)]
 pub struct Process {

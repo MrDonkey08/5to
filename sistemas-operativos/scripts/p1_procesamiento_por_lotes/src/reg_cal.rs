@@ -1,5 +1,5 @@
 use regex::Regex;
-use std::io::{self, Write};
+
 
 pub fn math_operation(expression: Regex, mut operation: String, operator: &str) -> String {
     loop {

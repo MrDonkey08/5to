@@ -2,12 +2,12 @@ mod process;
 mod screen;
 mod reg_cal;
 
-use regex::Regex;
+
 use rand::Rng;
 use std::io::{self, Write};
-use std::process::Command;
-use std::thread;
-use std::time::{Duration, Instant};
+
+
+use std::time::{Instant};
 
 const LOTE: usize = 4;
 
@@ -21,11 +21,11 @@ fn main() {
         .read_line(&mut num_process)
         .expect("Failed to read number");
 
-    let mut int_num_process : usize = num_process.trim().parse().unwrap();
+    let int_num_process : usize = num_process.trim().parse().unwrap();
 
     let batches_res : usize = int_num_process % LOTE;
     let batches_cos : usize = int_num_process / LOTE;
-    let mut batches : usize = batches_cos + if batches_res != 0 { 1 } else { 0 };
+    let batches : usize = batches_cos + if batches_res != 0 { 1 } else { 0 };
 
     println!("Bacth: {batches}");
 
@@ -108,17 +108,17 @@ fn main() {
     }
 }
 
-fn working_batch(arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
+fn working_batch(_arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
     println!("Batch in execution: {} de {}\n", i+1, batches);
     println!("Estimated execution time {}µs\n\n", arr_2[i]);
 }
 
-fn finished_processes(arr : &Vec<process::Process>, j : usize, k : usize) {
+fn finished_processes(arr : &Vec<process::Process>, j : usize, _k : usize) {
     println!("Nombre: {}", arr[j].get_username());
     println!("Estimated execution time {}µs\n\n", arr[j].get_exe_time());
 }
 
-fn working_processes(arr : &Vec<process::Process>, i: usize, j : usize, k : usize, times : &Vec<u64>) {
+fn working_processes(arr : &Vec<process::Process>, _i: usize, j : usize, k : usize, _times : &Vec<u64>) {
     let start = Instant::now();
     println!("Programa: {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
