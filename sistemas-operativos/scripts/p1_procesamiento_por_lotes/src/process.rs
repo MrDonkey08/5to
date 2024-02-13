@@ -48,7 +48,7 @@ impl Process {
         return &self.ans_exp;
     }
 
-    pub fn set_ans_exp(&mut self) {
+    pub fn _set_ans_exp(&mut self) {
         io::stdin()
             .read_line(&mut self.ans_exp)
             .expect("Failed to read line");

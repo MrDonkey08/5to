@@ -145,7 +145,6 @@ fn main() {
     screen::sys_clear();
 
     k = 0;
-    l = 0;
 
     println!("Finished batches");
 
@@ -164,7 +163,7 @@ fn main() {
                 finished_processes(&processes, j);
                 k=j+1;
             }
-            
+
         }
 
         println!("-----------------------------------------------------------------------");
