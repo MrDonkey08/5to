@@ -2,26 +2,41 @@ mod process;
 mod screen;
 mod reg_cal;
 
-
 use rand::Rng;
 use std::io::{self, Write};
-
-
 use std::time::{Instant};
 
 const LOTE: usize = 4;
 
 fn main() {
-    println!("Welcome to the Process Simulator\n");
-    print!("Enter the number of process to execute: ");
-    io::stdout().flush().expect("Failed to flush stdout");
+    screen::sys_clear();
 
-    let mut num_process = String::new();
-    io::stdin()
-        .read_line(&mut num_process)
-        .expect("Failed to read number");
+    let mut num_process;
+    let int_num_process: usize;
 
-    let int_num_process : usize = num_process.trim().parse().unwrap();
+    loop {
+        println!("Welcome to the Process Simulator\n");
+        print!("Enter the number of processes to execute: ");
+        io::stdout().flush().expect("Failed to flush stdout");
+
+        num_process = String::new();
+        io::stdin()
+            .read_line(&mut num_process)
+            .expect("Failed to read number");
+
+        int_num_process = match num_process.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Invalid input. Please, enter a valid integer");
+                screen::sys_pause();
+                screen::sys_clear();
+                continue; // Continue to the next iteration of the loop
+            }
+        };
+        break;
+    }
+
+        //let int_num_process : usize = num_process.trim().parse().unwrap();
 
     let batches_res : usize = int_num_process % LOTE;
     let batches_cos : usize = int_num_process / LOTE;
@@ -35,18 +50,37 @@ fn main() {
     for n in 0..int_num_process {
         processes.push(process::Process::new(String::from(""), String::from(""), String::from(""), 0));
 
-        println!("Process: {} of {}", n+1, num_process);
+        loop {
+            println!("Process: {} of {}", n+1, num_process);
 
-        print!("Programmer name: ");
-        io::stdout().flush().expect("Failed to flush stdout");
+            if processes[n].get_username().is_empty(){
+                print!("Programmer name: ");
+                io::stdout().flush().expect("Failed to flush stdout");
+                processes[n].set_username();
+            }
 
-        processes[n].set_username();
 
-        print!("Math Expression: ");
-        io::stdout().flush().expect("Failed to flush stdout");
-        processes[n].set_math_exp();
+            if processes[n].get_username().is_empty(){
+                println!("Username cannot be empty. Please enter a valid name.");
+                screen::sys_pause();
+                screen::sys_clear();
+                continue; // Continue to the next iteration of the loop
+            }
 
-        processes[n].set_exe_time(rand::thread_rng().gen_range(1..=50));
+            print!("Math Expression: ");
+            io::stdout().flush().expect("Failed to flush stdout");
+            processes[n].set_math_exp();
+
+            if processes[n].get_math_exp().is_empty(){
+                println!("Math Expression cannot be empty. Please enter a valid math expression.");
+                screen::sys_pause();
+                screen::sys_clear();
+                continue; // Continue to the next iteration of the loop
+            }
+
+            processes[n].set_exe_time(rand::thread_rng().gen_range(1..=50));
+            break;
+        }
     }
 
     screen::sys_pause();
@@ -120,7 +154,7 @@ fn finished_processes(arr : &Vec<process::Process>, j : usize, _k : usize) {
 
 fn working_processes(arr : &Vec<process::Process>, _i: usize, j : usize, k : usize, _times : &Vec<u64>) {
     let start = Instant::now();
-    println!("Programa: {}", k+1);
+    println!("Program (ID): {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
     println!("Estimated execution time {}µs", (arr[j].get_exe_time()));
     println!("Operation: {} = {}", arr[j].get_math_exp(), arr[j].get_ans_exp());
