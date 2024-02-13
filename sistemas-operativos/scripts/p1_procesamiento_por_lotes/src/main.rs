@@ -9,6 +9,7 @@ use std::time::{Instant};
 const LOTE: usize = 4;
 
 fn main() {
+    let start = Instant::now();
     screen::sys_clear();
 
     let mut num_process;
@@ -117,7 +118,7 @@ fn main() {
         if k < int_num_process - batches_res {
             for j in k..LOTE+k {
                 processes[j].calculate_ans_exp();
-                working_processes(&processes, i, j, k, &time);
+                working_processes(&processes, j, k, &time);
                 time[i] -= processes[j].get_exe_time();
                 println!("Time left: {}µs\n\n", time[i]);
                 processes[j].get_math_exp();
@@ -127,19 +128,52 @@ fn main() {
         } else if batches_res > 0 {
             for j in k..int_num_process {
                 processes[j].calculate_ans_exp();
-                working_processes(&processes, i, j, k, &time);
+                working_processes(&processes, j, k, &time);
                 time[i] -= processes[j].get_exe_time();
                 //processes[j].set_ans_exp(get_result(processes[j].get_math_exp()));
                 println!("Time left: {}µs\n\n ", time[i]);
                 k=j+1;
             }
+            
         }
 
         println!("-----------------------------------------------------------------------");
 
-        //screen::sys_pause();
-        //screen::sys_clear();
     }
+
+    screen::sys_pause();
+    screen::sys_clear();
+
+    k = 0;
+    l = 0;
+
+    println!("Finished batches");
+
+    for i in 0..batches {
+        finished_batch(&processes, i, batches);
+
+        // Processes in Execution
+
+        if k < int_num_process - batches_res {
+            for j in k..LOTE+k {
+                finished_processes(&processes, j);
+                k=j+1;
+            }
+        } else if batches_res > 0 {
+            for j in k..int_num_process {
+                finished_processes(&processes, j);
+                k=j+1;
+            }
+            
+        }
+
+        println!("-----------------------------------------------------------------------");
+
+    }
+
+    let duration = start.elapsed();
+
+    println!("Program Execution Time: {:?}", duration);
 }
 
 fn working_batch(_arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
@@ -147,12 +181,17 @@ fn working_batch(_arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, bat
     println!("Estimated execution time {}µs\n\n", arr_2[i]);
 }
 
-fn finished_processes(arr : &Vec<process::Process>, j : usize, _k : usize) {
-    println!("Nombre: {}", arr[j].get_username());
-    println!("Estimated execution time {}µs\n\n", arr[j].get_exe_time());
+fn finished_batch(_arr : &Vec<process::Process>, i : usize, batches : usize) {
+    println!("Batch: {} de {}\n", i+1, batches);
 }
 
-fn working_processes(arr : &Vec<process::Process>, _i: usize, j : usize, k : usize, _times : &Vec<u64>) {
+
+fn finished_processes(arr : &Vec<process::Process>, j : usize) {
+    println!("Nombre: {}", arr[j].get_username());
+    println!("Operation: {} = {}\n\n", arr[j].get_math_exp(), arr[j].get_ans_exp());
+}
+
+fn working_processes(arr : &Vec<process::Process>, j : usize, k : usize, _times : &Vec<u64>) {
     let start = Instant::now();
     println!("Program (ID): {}", k+1);
     println!("Nombre: {}", arr[j].get_username());
