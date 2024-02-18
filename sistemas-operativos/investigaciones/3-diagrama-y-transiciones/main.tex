@@ -19,6 +19,8 @@
 \usepackage{titlesec}
 \usepackage{blindtext} % Solo para generar texto de relleno, puedes eliminar esta línea en tu documento final.
 \usepackage{natbib}
+\usepackage{array} % <-- Add this line for m{} column type
+
 
 % Encabezado y pie de página
 \pagestyle{fancy}
@@ -95,7 +97,7 @@
 \newcommand{\code}{218517809}
 \newcommand{\carrera}{Ingeniería en Cómputo}
 \newcommand{\seccion}{D04}
-\newcommand{\startDate}{17 de febrero de 2024}
+\newcommand{\startDate}{18 de febrero de 2024}
 
 % Espaciado
 \newcommand{\nl}{\par\vspace{0.4cm}}
@@ -196,47 +198,124 @@
 \clearpage
 \tableofcontents
 
-%\clearpage
-%\listoffigures
+\clearpage
+\listoffigures
 	
 %\clearpage
-%\listoftables
+\listoftables
 % Fin de Índices
 
 \clearpage
 
-\section{Creación y Terminación de Proceso}
+\section{Creación y Finalización de Procesos}
 
-\section{Diagrama de 5 Estados}
+Un proceso no es más que una instancia de un programa en ejecución, incluyendo los valores actuales del contador del programa, registros y variables. A gran escala, existen dos tipos de procesos:
+
+\begin{itemize}
+	\item \textbf{\textit{Foreground}}: Aquellos procesos que, al ser ejecutados, son visibles para el usuario. El usuario interactúa directamente con ellos. P. ej: reproducción de video, uso de procesadores de texto (p. ej. word,), reproducir un videojuego, etc.
+	\item \textbf{\textit{Background}}: Aquellos que, al ser ejecutados, no son visibles para el usuario. El usuario interactúa indirectamente o inclusive no interactúa con ellos. P. ej: mantenimiento del sistema (virus, limpieza, actualización...), descarga de archivos, \textit{deamons} (p. ej: servicios del sistema), etc.
+\end{itemize}
+
+\subsection{Creación de Procesos}
+
+Si bien, en sistemas simples o de propósito específico, al ser iniciados, es posible que se encuentren presentes todos los servicios que podrían ser necesario, en sistemas de propósito general es esencial tener alguna forma de crear y finalizar procesos como sea necesario, durante la operación.
+
+Existen cuatro eventos que causan la creación de procesos:
+
+\begin{enumerate}
+	\item \textbf{Inicialización del sistema}: Se crean procesos necesarios para el funcionamiento del sistema y procesos que han sido establecidos por programas y el usuario para ser creados al iniciar el sistema.
+	\item \textbf{Proceso llamado por otro proceso:} El proceso en ejecución solicita la creación de otro.
+	\item \textbf{Solicitud del usuario de crear un nuevo procesos}: El usuario ejecuta un programa, ya sea al abrir el ejecutable (doble click), al ejecutar un comando (programa) a través del CLI, etc.
+	\item \textbf{Iniciación de un trabajo por lotes}: Programa o conjunto de programa que son enviados al SO para ser ejecutados sin necesidad de interacción del usuario.
+\end{enumerate}
+
+\subsection{Finalización de Procesos}
+
+Después de que un proceso haya sido creado, comienza a realizar cualquiera que sea su trabajo hasta que este finaliza. Este puede terminar debido a una de las siguientes condiciones:
+
+\begin{enumerate}
+	\item \textbf{Salida normal (voluntario)}: El usuario decide salir/finalizar el programa,
+	\item \textbf{Error de salida (voluntario)}: El proceso descubre un error fatal. P. ej. un usuario ejecuta un comando con un parámetro o atributo incorrecto. En programas con interfaz gráfica suelen lanzar una ventana con el error, en vez de finalizar el programa.
+	\item \textbf{Error fatal (involuntario)}: Error causado por el procesos, a menudo por un \textit{bug} del programa. Algunos ejemplos son la ejecución de instrucciones ilegales, referencias de memorias inexistenes o división entre cero. En algunos sistemas (p. ej UNIX) un proceso puede decirle al SO que lo maneje como una interrupción para manejar ciertos errores por sí mismo.
+	\item \textbf{Matado por otro proceso (involuntario)}: Un proceso solicita al sistema finalizar otro proceso. Los procesos que fueron creados por el proceso finalizado también finalizan.
+\end{enumerate}
+
+\section{Estados de un Proceso}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.65\textwidth]{./img/diagram_of_process_state.jpg}
+	\caption{Diagrama de 5 Estados}
+\end{figure}
+
+\begin{itemize}
+	\item \textbf{Nuevo (\textit{New})}: Se crea un proceso nuevo
+	\item \textbf{Listo (\textit{Ready})}: El proceso ha sido admitido y está en cola de espera
+	\item \textbf{En ejecución (\textit{Running})}: El proceso está siendo ejecutado
+	\item \textbf{En espera (\textit{Wating})}: El proceso ha sido suspendido debido a una espera de I/O
+	\item \textbf{Finalizado (\textit{Terminated})}: El proceso ha finalizado
+\end{itemize}
 
 \section{Algoritmos de Planificación}
 
+En los sistemas de multiprogramaicón, la \textbf{planificación} del procesador se encarga de seleccionar entre todos los procesos en espera aquel que se le asignará el procesador.
+
+Fundamentalmente, la planificación es una cuestión de manejo de colas para minimizar la demora de los procesos en éstas y optimizar el rendimiento.
+
 \subsection{Políticas de Planificación}
 
+\begin{itemize}
+	\item \textbf{Apropiativas}: El proceso en ejecución puede ser interrumpido y pasar a estado listo. Esta decisión la puede tomar el sistema operativo cuando llega un nuevo proceso, cuando un proceso bloqueado pasa a estado listo, cuando se activa un proceso suspendido, o periódicamente al producirse una interrupción del reloj. 
+	\item \textbf{No Apropiativas}: Cuando un proceso empieza a ejecutarse, solo se le puede retirar la CPU si se bloquea o termina.
+\end{itemize}
 \begin{table}[h]
-\centering
-\begin{tabular}{|l|p{2cm}|p{1.5cm}|p{2cm}|p{3cm}|p{3cm}}
-        
-\hline
-\textbf{Algoritmo} & \textbf{Descripción} & \textbf{Política} & \textbf{Ventaja} & \textbf{Desventaja} \\ \hline
-RR & Round Robin & FIFO & Distribuye el tiempo de CPU equitativamente entre los procesos. & Puede haber un alto tiempo de espera para procesos largos. \\ \hline
-FCFS & First-Come, First-Served & FIFO & Fácil de implementar y entender. & Tiempo de espera largo para procesos de CPU intensiva. \\ \hline
-SRT & Shortest Remaining Time & SJF & Minimiza el tiempo de espera para procesos cortos. & Puede causar inanición para procesos largos. \\ \hline
-SJF & Shortest Job First & SJF & Minimiza el tiempo de espera total. & Puede causar inanición para procesos largos. \\ \hline
-Prioridades & Prioridades & Prioridad & Permite la ejecución de procesos importantes primero. & Puede causar inanición para procesos de baja prioridad. \\ \hline
-Colas Múltiples & Multiple Queues & Varios & Permite diferentes políticas de planificación para diferentes tipos de procesos. & Puede ser complicado de implementar y administrar. \\ \hline
-\end{tabular}
-\caption{Descripción de algoritmos de planificación de CPU}
-\label{tab:algoritmos}
+	\centering
+	\renewcommand{\arraystretch}{1.2} % <-- Adjust vertical spacing
+	\begin{tabular}{|m{1.8cm}|m{6cm}|m{2cm}|m{2cm}|m{2cm}|m{2cm}}\hline
+		\textbf{Algoritmo} & \textbf{Descripción} & \textbf{Política} & \textbf{Ventaja} & \textbf{Desventaja}\\ \hline
+		RR: Round Robin & Los procesos se ejecutan de manera secuencial en turnos, y si un proceso no se completa dentro de su quantum, se suspende y se coloca al final de la cola listos para ser ejecutado nuevamente & No Apropiativo & Evita la inanición de procesos largos & Tiempo de respuesta más largo\\ \hline
+		FCFS: First-Come, First-Served & El proceso que llega primero se ejecuta primero, y los demás esperan en la cola hasta que su turno llegue. &No Apropiativo & Simple de implementar & Puede causar inanición de procesos\\ \hline
+		SRT: Shortest Remaining Time & SRT verifica continuamente si hay un proceso más corto en la cola listos y lo ejecuta si es así & Apropiativo & Minimiza el tiempo de respuesta & Puede causar inanición de procesos largos\\ \hline
+		SJF: Shortest Job First & Se selecciona para ejecución el proceso con el tiempo de ejecución más corto en la cola listos & No Apropiativo & Minimiza el tiempo de espera & No es justo, procesos largos pueden esperar\\ \hline
+		Prioridades & Cada proceso tiene una prioridad asignada, y el algoritmo selecciona para ejecución el proceso con la prioridad más alta en la cola listos & Apropiativo / No Apropiativo & Permite dar prioridad a procesos importantes & Puede causar inanición de procesos de baja prioridad\\ \hline
+		Colas Múltiples & Los procesos nuevos ingresan a la cola de prioridad más alta y, si no se completan dentro de un cierto límite de tiempo, se mueven a una cola de prioridad más baja & Apropiativo & Permite asignar diferentes niveles de prioridad & Mayor complejidad de implementación\\ \hline
+		RR mejorado & Ajusta dinámicamente el quantum de tiempo según las necesidades de los procesos & Apropiativo & Ajusta el quantum según las necesidades & Puede tener un mayor overhead de procesamiento\\ \hline
+		HRRN: Highest Response Ratio Next & Se priorizan los procesos en función de su relación entre el tiempo de respuesta esperado y el tiempo de ejecución restante. El proceso con la relación más alta se selecciona para ejecución primero & No Apropiativo & Procesos con alta relación respuesta/tiempo & Puede provocar inanición de procesos largos\\ \hline
+	\end{tabular}
+	\caption{Descripción de algoritmos de planificación de CPU}
 \end{table}
 
-\section{Cuestionario}
+\clearpage
+\section*{Cuestionario}
 
 \begin{enumerate}
 	\item Describa en qué consisten los algoritmos de planificación No Apropiativos.
+		
+		Son aquellos que, una vez un proceso ha comenzado a ejecutarse, no habrá interrupciones, es decir, no se detendrá o hasta que haya finalizado o hasta que se bloquee.
+
 	\item Explique cómo obtener cada uno de los tiempos solicitados en el punto 9 del programa 3 (actividad de aprendizaje 6).
+
+	\begin{enumerate}
+		\item \textbf{Llegada}: Al ejecutar el proceso obtengo la hora del sistema.
+		\item \textbf{Finalización}: Una vez finalizado obtengo la hora del sistema.
+		\item \textbf{Retorno}: Calculo la diferencia entre la hora de llegada y de finalización del proceso.
+		\item \textbf{Respuesta}: Registro la hora en la que llega, la de cuando es atendido y cálculo la diferencia.
+		\item \textbf{Espera}: Registro la hora en la que llega, la de cuando es atendido y cálculo la diferencia.
+		\item \textbf{Servicio}: Si no hubo interrupciones, el TME, sino, registro cada una de las horas en las que ingresa al procesador, cálculos sus respectivas diferencias con sus respectivas horas de suspensión/finalización y las sumo.
+	\end{enumerate}
+
 	\item ¿Qué significa BCP? 
+
+		BCP significa Bloque de Control de Procesos (BCP). Es una estructura de datos en un sistema operativo que contiene información sobre un proceso en ejecución o en espera.
 \end{enumerate}
+
+\clearpage
+\section*{Conclusión}
+
+En retrospectiva, la gestión de procesos dentro de un SO debe estar bien estructurada e implementada para poder tener un correcto funcionamiento y un buen aprovechamiento de los recursos.
+
+Para finalizar, desde mi punto de vista es de vital importancia entender el cómo se crean, finalizan los procesos y, además, entender cada una de las etapas o estados de un proceso.
+
 
 % Referencias
 
