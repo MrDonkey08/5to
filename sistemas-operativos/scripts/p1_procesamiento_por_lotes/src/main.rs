@@ -66,7 +66,7 @@ fn main() {
                         processes[n].set_id_empty();
                         break;
                     }
-                } 
+                }
             }
 
             if  !seted_exe_time {
@@ -108,13 +108,6 @@ fn main() {
                 if processes[n].get_ans_exp().is_empty() {
                     processes[n].set_math_exp_empty();
                 }
-            }
-
-            if processes[n].get_math_exp().is_empty() {
-                println!("Math Expression cannot be empty. Please enter a valid math expression.");
-                screen::sys_pause();
-                screen::sys_clear();
-                continue; // Continue to the next iteration of the loop
             }
 
             if processes[n].input_empty() {
@@ -228,7 +221,7 @@ fn finished_processes(arr : &Vec<process::Process>, j : usize) {
 fn working_processes(arr : &mut Vec<process::Process>, i : usize, j : usize, k : usize, times : &mut Vec<u64>) {
     let start = Instant::now();
     arr[j].calculate_ans_exp();
-    println!("Program (ID): {}", k+1);
+    println!("Program (ID): {}", arr[j].get_id());
     println!("Nombre: {}", arr[j].get_username());
     println!("Estimated execution time {}s", (arr[j].get_exe_time()));
     println!("Operation: {} = {}", arr[j].get_math_exp(), arr[j].get_ans_exp());
