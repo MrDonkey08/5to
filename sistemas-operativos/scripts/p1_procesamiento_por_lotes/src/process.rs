@@ -69,6 +69,10 @@ impl Process {
         self.math_exp = self.math_exp.trim().to_string();
     }
 
+    pub fn set_math_exp_empty(&mut self) {
+        self.math_exp.clear();
+    }
+
     pub fn get_ans_exp(&self) -> &str {
         return &self.ans_exp;
     }
@@ -82,20 +86,51 @@ impl Process {
 
     pub fn calculate_ans_exp(&mut self) {
         // Regex
-
         let re_add = Regex::new(r"(\d+)\s?\+\s?(\d+)").unwrap();
         let re_sub = Regex::new(r"(\d+)\s?\-\s?(\d+)").unwrap();
         let re_mul = Regex::new(r"(\d+)\s?\*\s?(\d+)").unwrap();
-        let re_div = Regex::new(r"(\d+)\s?/\s?(\d+)").unwrap();
+        let re_div = Regex::new(r"(\d+)\s?\/\s?(\d+)").unwrap();
+        let re_mod = Regex::new(r"(\d+)\s?\%\s?(\d+)").unwrap();
 
         let mut input = self.math_exp.clone();
 
-        input = reg_cal::math_operation(re_mul, input.clone(), "*");
-        input = reg_cal::math_operation(re_div, input.clone(), "/");
-        input = reg_cal::math_operation(re_add, input.clone(), "+");
-        input = reg_cal::math_operation(re_sub, input.clone(), "-");
+        // Apply each operation in the specified order
+        if let Ok(result) = reg_cal::math_operation(re_mul, input.clone(), "*") {
+            input = result;
+        } else {
+            println!("Error occurred while performing multiplication");
+            return;
+        }
 
-        self.ans_exp = input.clone();
+        if let Ok(result) = reg_cal::math_operation(re_div, input.clone(), "/") {
+            input = result;
+        } else {
+            println!("Indeterminacy error: not possible to divide by 0");
+            return;
+        }
+
+        if let Ok(result) = reg_cal::math_operation(re_mod, input.clone(), "%") {
+            input = result;
+        } else {
+            println!("Indeterminacy error: not possible to divide by 0");
+            return;
+        }
+
+        if let Ok(result) = reg_cal::math_operation(re_add, input.clone(), "+") {
+            input = result;
+        } else {
+            println!("Error occurred while performing addition");
+            return;
+        }
+
+        if let Ok(result) = reg_cal::math_operation(re_sub, input.clone(), "-") {
+            input = result;
+        } else {
+            println!("Error occurred while performing subtraction");
+            return;
+        }
+
+        self.ans_exp = input;
     }
 
     pub fn get_exe_time(&self) -> u64 {

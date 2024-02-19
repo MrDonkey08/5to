@@ -103,6 +103,11 @@ fn main() {
                 print!("Math Expression: ");
                 io::stdout().flush().expect("Failed to flush stdout");
                 processes[n].set_math_exp();
+                processes[n].calculate_ans_exp();
+
+                if processes[n].get_ans_exp().is_empty() {
+                    processes[n].set_math_exp_empty();
+                }
             }
 
             if processes[n].get_math_exp().is_empty() {
