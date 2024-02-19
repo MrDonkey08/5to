@@ -3,16 +3,14 @@ mod screen;
 mod reg_cal;
 
 use rand::Rng;
-use std::io::{self, Write};
-use std::time::{Instant};
-use std::{thread, time}; // For system sleep
-
+use std::io:: {self, Write};
+use std::time:: {Instant};
+use std:: {thread, time}; // For system sleep
 
 const LOTE: usize = 4;
 
 fn main() {
     let start = Instant::now();
-    screen::sys_clear();
 
     let mut num_process;
     let int_num_process: usize;
@@ -48,31 +46,74 @@ fn main() {
     let mut processes : Vec<process::Process> = Vec::new();
 
     for n in 0..int_num_process {
-        processes.push(process::Process::new(String::from(""), String::from(""), String::from(""), 0));
+        processes.push(process::Process::new(String::from(""), String::from(""), String::from(""), String::from(""), 0));
+
+        let mut used_id = false;
+        let mut seted_exe_time = false;
 
         loop {
             println!("Process: {} of {}", n+1, num_process);
 
-            if processes[n].get_username().is_empty(){
+            if processes[n].get_id().is_empty() {
+                print!("ID: ");
+                io::stdout().flush().expect("Failed to flush stdout");
+                processes[n].set_id();
+
+                for m in 0..n {
+                    if n > 0 && processes[n].get_id() == processes[m].get_id() {
+                        println!("ID already used. Try again");
+                        used_id = true;
+                        processes[n].set_id_empty();
+                        break;
+                    }
+                } 
+            }
+
+            if  !seted_exe_time {
+                let int_aux;
+
+                print!("Estimated execution time: ");
+                io::stdout().flush().expect("Failed to flush stdout");
+                let mut aux = String::new();
+
+                io::stdin()
+                    .read_line(&mut aux)
+                    .expect("Failed to read number");
+        
+                int_aux = match aux.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Invalid input. Please, enter a valid integer");
+                        screen::sys_pause();
+                        screen::sys_clear();
+                        continue;
+                    }
+                };
+                processes[n].set_exe_time(int_aux);
+                seted_exe_time = true;
+            }
+
+            if processes[n].get_username().is_empty() {
                 print!("Programmer name: ");
                 io::stdout().flush().expect("Failed to flush stdout");
                 processes[n].set_username();
             }
 
+            if processes[n].get_math_exp().is_empty() {
+                print!("Math Expression: ");
+                io::stdout().flush().expect("Failed to flush stdout");
+                processes[n].set_math_exp();
+            }
 
-            if processes[n].get_username().is_empty(){
-                println!("Username cannot be empty. Please enter a valid name.");
+            if processes[n].get_math_exp().is_empty() {
+                println!("Math Expression cannot be empty. Please enter a valid math expression.");
                 screen::sys_pause();
                 screen::sys_clear();
                 continue; // Continue to the next iteration of the loop
             }
 
-            print!("Math Expression: ");
-            io::stdout().flush().expect("Failed to flush stdout");
-            processes[n].set_math_exp();
-
-            if processes[n].get_math_exp().is_empty(){
-                println!("Math Expression cannot be empty. Please enter a valid math expression.");
+            if processes[n].input_empty() {
+                println!("Empty field detected. Please try again.");
                 screen::sys_pause();
                 screen::sys_clear();
                 continue; // Continue to the next iteration of the loop

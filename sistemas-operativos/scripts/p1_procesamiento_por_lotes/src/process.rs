@@ -5,6 +5,7 @@ use std::io::{self}; // Importing io and Write trait
 
 #[derive(Default, Debug)]
 pub struct Process {
+    id: String,
     username: String,
     math_exp: String,
     ans_exp: String,
@@ -13,13 +14,37 @@ pub struct Process {
 
 impl Process {
     // Method to create a new instance of Process
-    pub fn new(username: String, math_exp: String, ans_exp: String, exe_time: u64) -> Self {
+    pub fn new(id: String, username: String, math_exp: String, ans_exp: String, exe_time: u64) -> Self {
         Process {
+            id,
             username,
             math_exp,
             ans_exp,
             exe_time,
         }
+    }
+
+    pub fn input_empty(&self) -> bool {
+        let is_empty: bool = if self.id.is_empty() || self.username.is_empty() || self.math_exp.is_empty() {
+            true
+        } else { false };
+
+        return is_empty;
+    }
+
+    pub fn get_id(&self) -> &str {
+        return &self.id;
+    }
+
+    pub fn set_id(&mut self) {
+        io::stdin()
+        .read_line(&mut self.id)
+        .expect("Failed to read line");
+        self.id = self.id.trim().to_string();
+    }
+
+    pub fn set_id_empty(&mut self) {
+        self.id.clear()
     }
 
     pub fn get_username(&self) -> &str {
