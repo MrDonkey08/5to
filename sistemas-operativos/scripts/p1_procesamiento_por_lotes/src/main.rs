@@ -1,7 +1,6 @@
 mod process;
 mod screen;
 mod reg_cal;
-mod time_counter;
 
 use rand::Rng;
 use std::io:: {self, Write};
@@ -11,16 +10,6 @@ use std:: {thread, time}; // For system sleep
 const LOTE: usize = 4;
 
 fn main() {
-    screen::sys_clear();
-    // Create an instance of TimeCounter
-    let time_counter = time_counter::TimeCounter::new();
-    
-    // Start the time counter
-    time_counter.start_counter();
-
-    // Your main program logic goes here
-    // For example, simulate some work
-
     let start = Instant::now();
 
     let mut num_process;
@@ -90,7 +79,7 @@ fn main() {
                 io::stdin()
                     .read_line(&mut aux)
                     .expect("Failed to read number");
-
+        
                 int_aux = match aux.trim().parse() {
                     Ok(num) => num,
                     Err(_) => {
@@ -177,6 +166,7 @@ fn main() {
         }
 
         println!("-----------------------------------------------------------------------");
+
     }
 
     screen::sys_pause();
@@ -205,19 +195,12 @@ fn main() {
         }
 
         println!("-----------------------------------------------------------------------");
+
     }
 
     let duration = start.elapsed();
 
     println!("Program Execution Time: {:?}", duration);
-
-    for _ in 0..10 {
-        // Simulate some work
-        println!("Working...");
-        // Sleep for a short time
-        std::thread::sleep(std::time::Duration::from_secs(1));
-    }
-
 }
 
 fn working_batch(_arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
