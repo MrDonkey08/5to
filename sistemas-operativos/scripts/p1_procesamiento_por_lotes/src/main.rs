@@ -125,105 +125,93 @@ fn main() {
     screen::sys_pause();
     screen::sys_clear();
 
-    let mut k = 0;
-    let mut l = 0;
     let mut time: Vec<u64> = Vec::new();
+    let mut j = 0; // int_num_process index
+    let mut k = 0; // 
+    let mut l = 0; // index for run batches
+    let mut m = batches-1; // descending index
+    let mut n = LOTE-1;
+    let mut lote = LOTE;
 
-    for i in 0..batches {
-
-        // Calculation of Batch Times
-
+    for i in 0..int_num_process {
         time.push(0);
-
-        if l < int_num_process - batches_res {
-            for j in l..LOTE+k {
-                time[i] += processes[j].get_exe_time();
-                l=j+1;
-            }
-        } else if batches_res > 0 {
-            for j in l..int_num_process {
-                time[i] += processes[j].get_exe_time();
-                l=j+1;
-            }
-        }
-
-        // Current Bath
-
-        working_batch(&processes, &time, i, batches);
-
-        // Processes in Execution
-
-        if k < int_num_process - batches_res {
-            for j in k..LOTE+k {
-                working_processes(&mut processes, i, j, k, &mut time);
-                k=j+1;
-            }
-        } else if batches_res > 0 {
-            for j in k..int_num_process {
-                working_processes(&mut processes, i, j, k, &mut time);
-                k=j+1;
-            }
-        }
-
-        println!("-----------------------------------------------------------------------");
-
     }
 
-    screen::sys_pause();
-    screen::sys_clear();
-
-    k = 0;
-
-    println!("Finished batches");
 
     for i in 0..batches {
-        finished_batch(&processes, i, batches);
+        
+        if m == 0 {
+            lote = batches_res;
+        }
 
-        // Processes in Execution
+        for j in k..lote+k {
+            time[i] += processes[j].get_exe_time();
+            working_batch(&time, batches, i);
+            for k in (n..=0).rev() {
+                batch_in_exe(&mut processes, k);
+            }
+            h_line();
 
-        if k < int_num_process - batches_res {
-            for j in k..LOTE+k {
+            working_processes(&mut processes, &mut time, i, j);
+            h_line();
+
+            for l in 0..i {
+                if i % 4 == 0 {
+                    finished_batch(batches, i);
+                }
                 finished_processes(&processes, j);
-                k=j+1;
             }
-        } else if batches_res > 0 {
-            for j in k..int_num_process {
-                finished_processes(&processes, j);
-                k=j+1;
-            }
+
+            h_line();
+            screen::sys_pause();
+            screen::sys_clear();
 
         }
 
-        println!("-----------------------------------------------------------------------");
+        if m > 0 {
+            m -= 1;
+        }
+
+        if n > 0 {
+            n -= 1;
+        }
+
 
     }
 
     let duration = start.elapsed();
-
+    h_line();
     println!("Program Execution Time: {:?}", duration);
 }
 
-fn working_batch(_arr : &Vec<process::Process>, arr_2: &Vec<u64>, i : usize, batches : usize) {
-    println!("Batch in execution: {} de {}\n", i+1, batches);
-    println!("Estimated execution time {}s\n\n", arr_2[i]);
+fn h_line(){
+    println!("---------------------");
 }
 
-fn finished_batch(_arr : &Vec<process::Process>, i : usize, batches : usize) {
+fn working_batch(times: &Vec<u64>, batches : usize, i : usize) {
+    println!("Batch in execution: {} de {}\n", i+1, batches);
+    println!("Estimated execution time {}s\n\n", times[i]);
+}
+
+fn batch_in_exe(arr: &Vec<process::Process>, j : usize){
+    println!("Program (ID): {}", arr[j].get_id());
+    println!("Estimated execution time {}s", (arr[j].get_exe_time()));
+}
+
+fn finished_batch(batches : usize, i : usize) {
     println!("Batch: {} de {}\n", i+1, batches);
 }
-
 
 fn finished_processes(arr : &Vec<process::Process>, j : usize) {
     println!("Nombre: {}", arr[j].get_username());
     println!("Operation: {} = {}\n\n", arr[j].get_math_exp(), arr[j].get_ans_exp());
 }
 
-fn working_processes(arr : &mut Vec<process::Process>, i : usize, j : usize, k : usize, times : &mut Vec<u64>) {
+fn working_processes(arr : &mut Vec<process::Process>, times : &mut Vec<u64>, i : usize, j : usize) {
     let start = Instant::now();
     arr[j].calculate_ans_exp();
     println!("Program (ID): {}", arr[j].get_id());
     println!("Nombre: {}", arr[j].get_username());
-    println!("Estimated execution time {}s", (arr[j].get_exe_time()));
     println!("Operation: {} = {}", arr[j].get_math_exp(), arr[j].get_ans_exp());
     thread::sleep(time::Duration::from_secs(arr[j].get_exe_time()-1));
     let duration = start.elapsed();
