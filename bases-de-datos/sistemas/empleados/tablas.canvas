@@ -1,0 +1,11 @@
+{
+	"nodes":[
+		{"id":"eba7dc9c4e3a9a79","type":"text","text":"## Departamento:\n\n|ID Departamento|Nombre|Descripción|Jefe del Departamento|\n|---|---|---|---|\n|1|Desarrollo|Departamento encargado del desarrollo de software|Juan Pérez|\n|2|Marketing|Encargado de estrategias de marketing|María Gómez|\n|3|Recursos Humanos|Encargado de la gestión de personal|Carlos Ruiz|\n","x":-785,"y":-400,"width":625,"height":257},
+		{"id":"75ba4b54e442b486","type":"text","text":"## Empleado:\n\n|ID Empleado|Nombre|Fecha de Nacimiento|Dirección|Teléfono|Puesto|Fecha de Contratación|Salario|\n|---|---|---|---|---|---|---|---|\n|1|Ana García|1990-05-15|Calle Principal 123|555-123-4567|Desarrollador|2023-02-10|$50,000|\n|2|Juan López|1985-10-20|Avenida Central 45|555-987-6543|Diseñador|2022-07-05|$45,000|\n|3|María Pérez|1988-03-30|Calle Secundaria 67|555-222-3333|Gerente de Proyecto|2021-11-15|$65,000|\n|4|Carlos Martínez|1995-09-18|Avenida Principal 8|555-777-8888|Analista de Datos|2024-01-20|$55,000|\n|5|Laura Sánchez|1992-07-25|Calle Nueva 10|555-444-5555|Especialista en Marketing|2023-08-30|$48,000|","x":-410,"y":-880,"width":700,"height":400},
+		{"id":"20239e9db8a22e22","type":"text","text":"## Proyecto:\n\n|ID Proyecto|Nombre del Proyecto|Descripción|Fecha de Inicio|Fecha de Finalización Estimada|\n|---|---|---|---|---|\n|1|Sistema de Gestión de Empleados|Desarrollo de un sistema para gestionar la información del personal|2023-03-15|2023-09-15|\n|2|Campaña Publicitaria de Verano|Diseño y ejecución de una campaña publicitaria de verano|2024-05-01|2024-08-30|\n|3|Actualización de Base de Datos|Actualización y optimización de la base de datos de clientes|2023-08-10|2023-11-30|\n|4|Desarrollo de Aplicación Móvil|Desarrollo de una aplicación móvil para ventas en línea|2024-02-20|2024-10-20|\n|5|Investigación de Mercado Internacional|Investigación de mercado en varios países para expansión internacional|2023-11-05|2024-03-05|","x":-60,"y":-400,"width":715,"height":380}
+	],
+	"edges":[
+		{"id":"9cfb73ffed9b15e4","fromNode":"75ba4b54e442b486","fromSide":"bottom","toNode":"20239e9db8a22e22","toSide":"top"},
+		{"id":"8a0e0c3abdeb6346","fromNode":"75ba4b54e442b486","fromSide":"bottom","toNode":"eba7dc9c4e3a9a79","toSide":"top"}
+	]
+}
