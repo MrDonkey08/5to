@@ -1,0 +1,275 @@
+\documentclass[12pt, a4paper]{article} % Formato de plantlla que vamos a utilizar
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{setspace}
+\usepackage[margin=2.5cm, left=3cm, right=2cm, includefoot]{geometry}
+\usepackage{graphicx} % Inserción de imágenes
+\usepackage[dvipsnames, table, xcdraw]{xcolor}
+\usepackage[most]{tcolorbox} % Inserción de cuadros en la portada
+\usepackage{fancyhdr} % Definir el estilo de la página
+\usepackage[hidelinks]{hyperref} % Gestión de hipervínculos
+\usepackage{listings} % Para la inserción de código
+\usepackage{parskip} % Arreglo de la tabulación en el documento
+\usepackage[figurename=Fig.]{caption} % Cambiar el nombre del caption de las fotos
+\usepackage{smartdiagram} % Inserción de Diagramas
+\usepackage{zed-csp} % Inserción de esquemas
+\usepackage{hyperref} % Para hipervínculos
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{blindtext} % Solo para generar texto de relleno, puedes eliminar esta línea en tu documento final.
+\usepackage{natbib}
+\usepackage{array} % <-- Add this line for m{} column type
+
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Elimina la línea del encabezado
+%\fancyfoot[C,CO]{\thepage} % Número de página en el centro para páginas pares e impares
+%\fancyhead[RO]{\textbf{\theTitle}} % Nombre de la materia en páginas impares
+%\fancyhead[L]{\textbf{\theauthor}} % Título de la investigación en páginas pares
+\setlength{\headheight}{15pt} % Ajuste necesario para evitar warnings
+
+% Configuración de fuentes
+\usepackage{times} % Times New Roman
+%\usepackage{tgheros} % Tahoma
+%\renewcommand{\familydefault}{\sfdefault} % Descomenta esta línea si usas Tahoma
+%\usepackage{uarial} % Arial
+%\renewcommand{\rmdefault}{phv} % Descomenta esta línea si usas Arial
+
+% Ajustes de formato
+\renewcommand{\baselinestretch}{1.15} % Espaciado de línea anterior
+\setlength{\parskip}{6pt} % Espaciado de línea anterior
+\setlength{\parindent}{0pt} % Sangría
+
+% Declaración de colores
+\definecolor{greenPortada}{HTML}{69A84F}
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{codegreen}{rgb}{0, 0.6, 0}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.92}
+
+% Esilo de enlaces
+\hypersetup{
+	colorlinks=true,
+	linkcolor=greenPortada,
+	filecolor=greenPortada,
+	urlcolor=greenPortada,
+	pdftitle={Overleaf Example},
+	pdfpagemode=FullScreen,
+}
+
+\urlstyle{same}
+
+% Estilo de bloques de código
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Declaración de variables
+\newcommand{\logoUdg}{../../../../attachments/images/portada-udg.jpeg}
+\newcommand{\logoCucei}{../../../../attachments/images/portada-cucei.jpeg}
+
+% Datos de la Materia
+\newcommand{\materia}{Sistemas Operativos}
+\newcommand{\theTitle}{5. Interbloqueo}
+\newcommand{\profesor}{Violeta del Rocío Becerra Velázquez}
+\newcommand{\theAuthor}{Juárez Rubio Alan Yahir}
+\newcommand{\code}{218517809}
+\newcommand{\carrera}{Ingeniería en Cómputo}
+\newcommand{\seccion}{D04}
+\newcommand{\startDate}{17 de marzo de 2024}
+
+\newcommand{\aAuthor}{Castellanos Ramírez Gutavo Fabián}
+\newcommand{\bAuthor}{Cadena Montes Omar Alexis}
+\newcommand{\cAuthor}{Valenzuela López Jorge Yahir}
+
+% Espaciado
+\newcommand{\nl}{\par\vspace{0.4cm}}
+
+% Adicionales
+\addto\captionsspanish{\renewcommand{\contentsname}{Índice}}
+\setlength{\headheight}{60pt}
+\pagestyle{fancy}
+
+% Encabezado
+\fancyhf{}
+\lhead{
+	\begin{minipage}[c][2cm][c]{1.3cm}
+		\begin{flushleft}
+			\includegraphics[width=5cm, height=1.4cm, keepaspectratio]{\logoUdg}
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}[c][2cm][c]{0.5\textwidth} % Adjust the height as needed
+		\begin{flushleft}	
+		{\ifodd\value{page}\materia\fi}
+		\end{flushleft}
+	\end{minipage}
+}
+\rhead{
+		\begin{minipage}[c][2cm][c]{0.4\textwidth} % Adjust the height as needed
+			\begin{flushright}
+				{\ifodd\value{page}\else\theTitle\fi}
+			\end{flushright}
+		\end{minipage}
+		\begin{minipage}[c][2cm][c]{1.3cm}
+			\begin{flushright}
+				\includegraphics[width=5cm, height=1.4cm, keepaspectratio]{\logoCucei}
+			\end{flushright}
+		\end{minipage}
+}
+
+% Pie de página
+\rfoot{\ifodd\value{page}\theAuthor\fi}
+
+\renewcommand{\headrulewidth}{3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{greenPortada}\leaders\hrule height \headrulewidth\hfill}}
+
+\renewcommand{\lstlistingname}{Código} % Para cambiar el caption de los código
+%\renewcommand\thepage{\ifodd\value{page}\else\arabic{page}\fi}
+
+\title{\theTitle}
+\author{\theAuthor}
+
+% Comienzo del Documento
+\begin{document}
+\cfoot{\ifodd\value{page}\else\thepage\fi} % Paginación
+\setstretch{1}
+
+\begin{titlepage}
+	\centering
+	{\huge\textbf{Universidad de Guadalajara}}\par\vspace{0.6cm}
+	{\LARGE{Centro Universitario de Ciencias Exactas e Ingenierías}}\vfill
+	
+	\begin{figure}[h]
+		\begin{minipage}[t]{0.45\textwidth}
+			\centering
+			\includegraphics[width=120px, height=300px, keepaspectratio]{\logoUdg}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.45\textwidth}
+			\centering
+			\includegraphics[width=120px, height=300px, keepaspectratio]{\logoCucei}
+		\end{minipage}
+	\end{figure}\vfill
+	
+	{\Large{División de Tecnologías para la Integración CiberHumana}}\vfill\vfill
+	{\Large\textbf{\materia}}\vfill
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}[t]{0.75\textwidth}
+			{\Large
+				\textbf{Profesor:} \profesor\nl
+				\textbf{Carrera:} \carrera\nl
+				\textbf{Sección:} \seccion
+			}
+		\end{minipage}
+	\end{figure}\vfill
+	
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}[t]{0.75\textwidth}
+			\centering
+			{\Large \textbf{Integrantes del Equipo:}}\nl
+			{\large
+				\aAuthor\nl
+				\bAuthor\nl
+				\theAuthor\nl
+				\cAuthor\nl
+			}
+		\end{minipage}
+	\end{figure}
+
+	{\LARGE{\textbf{\theTitle}}}\vfill
+	
+	\begin{tcolorbox}[colback=red!5!white, colframe=red!75!black]
+		\centering
+		Este documento contiene información sensible.\\
+		No debería ser impreso o compartido con terceras entidades.
+	\end{tcolorbox}\vfill
+	{\large \startDate}\par
+\end{titlepage}
+
+% ïndices
+\clearpage
+\tableofcontents
+
+%\clearpage
+%\listoffigures
+	
+%\clearpage
+%\listoftables
+% Fin de Índices
+
+\clearpage
+\section{Interbloqueo}
+
+\clearpage
+\section{Cuestionario}
+
+\begin{enumerate}
+	\item ¿En qué consiste el problema de la concurrencia?
+
+
+
+	\item ¿Cuáles son los procesos concurrentes cooperantes?
+
+
+
+	\item ¿En qué consiste la Exclusión mutua?
+
+
+
+	\item Defina Interbloqueo.
+
+
+
+	\item Defina Inanición.
+
+
+
+	\item Defina Excesiva Cortesía.
+
+
+
+	\item ¿Qué son los Hilos?
+
+
+
+	\item ¿Qué son los Semáforos?
+
+
+
+	\item ¿Qué es lo que mejora el tener más de un núcleo?
+
+	
+\end{enumerate}
+
+% Referencias
+
+\nocite{*} % Para incluir todas las referencias sin necesidad de citarlas
+
+\clearpage
+\bibliographystyle{apalike}
+\bibliography{ref}
+
+\end{document}
