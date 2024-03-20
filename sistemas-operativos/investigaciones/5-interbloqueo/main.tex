@@ -93,7 +93,6 @@
 \newcommand{\materia}{Sistemas Operativos}
 \newcommand{\theTitle}{5. Interbloqueo}
 \newcommand{\profesor}{Violeta del Rocío Becerra Velázquez}
-\newcommand{\theAuthor}{Juárez Rubio Alan Yahir}
 \newcommand{\code}{218517809}
 \newcommand{\carrera}{Ingeniería en Cómputo}
 \newcommand{\seccion}{D04}
@@ -101,7 +100,10 @@
 
 \newcommand{\aAuthor}{Castellanos Ramírez Gutavo Fabián}
 \newcommand{\bAuthor}{Cadena Montes Omar Alexis}
-\newcommand{\cAuthor}{Valenzuela López Jorge Yahir}
+\newcommand{\cAuthor}{Juarez Rubio Alan Yahir}
+\newcommand{\dAuthor}{Valenzuela López Jorge Yahir}
+
+\newcommand{\theAuthor}{\cAuthor}
 
 % Espaciado
 \newcommand{\nl}{\par\vspace{0.4cm}}
@@ -221,7 +223,146 @@
 % Fin de Índices
 
 \clearpage
+\section{Recursos}
+
+La mayor clase de interbloqueos involucra recursos los cuales algunos procesos se les han concedodo exclusivo acceso. Estos recursos incluyen dispositivos, grabadores de información, archivos y mucho más.
+
+\subsection{Tipos de Recursos}
+
+\begin{itemize}
+    \item \textbf{Preemptivo}: Recurso que puede ser removido de la propiedad de un proceso sin efectos negativos.
+    \item \textbf{No preemptivo}: Recurso que, al ser removido de la propiedad de un proceso, tiene efectos negativos.
+\end{itemize}
+
+\section{Secuencia de un proceso}
+
+La secuencia abstracta de eventos requeridos para utilizar un recurso dado es:
+
+\begin{enumerate}
+    \item Solicitar el recurso.
+    \item Usar el recurso.
+    \item Liberar el recurso.
+\end{enumerate}
+
+Cuando un recurso no está disponible, el proceso de solicitud es forzado a esperar.
+
+En algunos SO's el proceso es automáticamente bloqueado cuando una solicitud de recurso falla y es despertado (reanudado) cuando el recurso está disponible.
+
 \section{Interbloqueo}
+
+Las computadoras están llenas de recursos que solamente pueden ser utilizados por un proceso a la vez. Consecuentemente, todos los SO's tienen la habilidad de (temporalemente) otorgar exclusivo acceso a ciertos recursos.
+
+Se le llama \textbf{interbloqueo} cuando un proceso $A$ necesita un recurso ocupado por un proceso $B$ para continuar y, seguidamente, el proceso $B$ requiere un recurso ocupado por el proceso $A$. 
+
+El \textbf{interbloqueo} puede consistir de 2 o más proceso que son bloqueados mutuamente. Como todos los procesos están en espera, ninguno de estos causará un evento que pueda despertar a otro proceso del conjunto.
+
+\subsection{Condiciones para Interbloqueo de Recursos}
+
+Coffman (1971) mostró que deben de cumplirse cuatro condiciones para que exista un interbloqueo (recurso):
+
+\begin{itemize}
+	\item \textbf{Exclusión mutua}:  Cada recurso o está actualmente asignado a exactamente a un proceso o está disponible.
+	\item \textbf{Retención y espera}: Un proceso mantiene un recurso mientras espera otro recurso que está siendo utilizado por otro proceso.
+	\item \textbf{No expropiación}: Los recursos ya asignados a un proceso no pueden ser tomados por otro proceso.
+	\item \textbf{Espera circular}: Existe un ciclo de procesos en el que cada proceso está esperando un recurso que es poseído por el siguiente proceso en el ciclo.
+\end{itemize}
+
+\subsection{El Algoritmo Ostrich}
+
+El algoritmo Ostrich es una técnica utilizada para prevenir los interbloqueos (deadlocks) en sistemas operativos y bases de datos. Este algoritmo se centra en detectar situaciones de posible interbloqueo antes de que ocurran y tomar medidas para evitar que se produzcan.
+
+El funcionamiento básico del algoritmo Ostrich es el siguiente:
+
+\begin{enumerate}
+	\item Cuando un proceso necesita un recurso, verifica si puede obtenerlo de inmediato. Si es así, lo adquiere y continúa su ejecución.
+	\item Si el recurso no está disponible de inmediato, el proceso hace una "pausa" y no solicita el recurso nuevamente durante un período de tiempo determinado (por ejemplo, unos pocos milisegundos).
+	\item Después de la pausa, el proceso intenta nuevamente obtener el recurso.
+	\item Si después de varios intentos el recurso sigue sin estar disponible, el proceso cambia su estrategia y solicita el recurso utilizando un método más "agresivo", como la prevención de interbloqueos tradicional (por ejemplo, utilizando el algoritmo del banquero o la asignación anticipada de recursos).
+	\item Este enfoque escalonado permite que el sistema opere de manera eficiente en condiciones normales y solo activa medidas más costosas (como la prevención de interbloqueos) cuando es necesario.
+\end{enumerate}
+
+\subsection{Prevención de Interbloqueos}
+
+Esta estrategia consiste en diseñar un sistema en el que la posibilidad de un interbloqueo sea nula. Podemos dividir la prevención de interbloqueos en dos clases:
+
+\begin{itemize}
+	\item \textbf{Indirecto}: Prevenir la ocurrencia de uno de las tres condiciones necerias para que exista un interbloqueo.
+	\item \textbf{Direcot}: Prevenir la ocurrencia de una espera circular
+\end{itemize}
+
+\subsubsection{Exclusión mutua}
+
+En general, la exclussión mutua no puede ser rechazada. Si un acceso a un recurso requiere exclusión mutua, entonces exclusión mutua debe ser soportado por el SO
+
+\subsubsection{Retención y Espera}
+
+Puede ser prevenida exigiendo que un proceso solicite todos sus recursos necesarios de una sola vez y bloqueando el proceso hasta que todas las solicitudes hayan sido completadas.
+
+Cabe mencionar que este enfoque es ineficiente de dos maneras.
+
+\begin{itemize}
+	\item Un proceso tiene que ser mantenido por un largo periodo de tiempo para que todas sus peticiones de recursos sean concedidas.
+	\item Los recursos asignados a un recurso pueden mantenerse sin uso por largos periodos de tiempo.
+\end{itemize}
+
+\subsubsection{No expropiación}
+
+Esta condición puede ser prevenida de varias maneras. Primero, un proceso que posee ciertos recursos se le deniega una solicitud nueva, ese proceso  debe liberar sus recursos originales y, si es necesario, solicitarlos de nuevo junto con el recurso adicional. Alternativamente, si un proceso solicita un recurso que está siendo poseído por otro proceso, el SO puede adelantarse al segundo proceso y requerirle que libere sus recursos.
+
+Este enfoque es practico solo cuando este es aplicado a recursos que se estado puede ser fácilmente guardados y restaurados después,
+
+\subsubsection{Epera circular}
+
+Esta condición puede ser prevenida al definir un orden lineal de tipos de recursos. Si un proceso tiene asignados recursos de tipo $R$, entonces puede subsecuentemente solicitar solamente esos recursos de tipos seguidos de $R$ en el orden.
+
+\subsection{Evasión de Interbloqueos}
+
+La evasión permite las tres condiciones necesarias, pero hace decisiones juiciosas para asegurarse de que nunca haya un interbloqueo. Como tal, la evasión permite más concurrencia que prevención. Con evasión de interbloqueos, una decisión es realizada dinamicamente, ya sea que la petición de la asignación de los recursos actuales, si es concedida, potencialemente lidiaría a un interbloqueo.
+
+Existen dos enfoques diferentes en la evasión de interbloqueos:
+
+\begin{itemize}
+	\item No comiences un proceso si su demanda puede que conduzca a un interbloqueo.
+	\item No concedas una petición de un recurso incremental a un proceso si esta asignación puede conducir a un interbloqueo.
+\end{itemize}
+
+\subsubsection{Rechazo de Asignación de Recursos}
+
+También conocido como \textbf{algoritmo del banquero}. Considera un sistema con un número fijo de procesos y un número fijo de recursos. En cualquier momento un proceso pude tener cero o más recursos asignados a este. Asímismo, el estado consiste en dos vectores. Recursos y Disponiblidad, y dos matrices, Solicitud y Petición. 
+
+Un \textbf{estado seguro} es aquel hay por lo menos una secuencia de asignaciones de recursos a procesos no resulta en un interbloqueo. Un \textbf{estado inseguro} es evidentemente aquel que no es seguro.
+
+En términos simples, el algorimo del banquero consiste en solamente otorgar recursos si hay una secuencia segura de procesos que pueda completarse.
+
+\subsection{Detección de Interbloqueos}
+
+Las estrategias de \textbf{detección de interbloqueos}, a diferencia de las de prevención de interbloqueos, no limitan el acceso de recursos o restringuen acciones de procesos.
+
+\subsubsection{Algoritmo de Detección de Interbloqueos}
+
+Un chequeo de interbloqueo puede ser realizado frecuentemente en cada solicitud de recurso o menos frecuente, dependiendo en que tan probable is que un interbloquo ocurra,
+
+Un algoritmo común para la detección de interbloqueos es uno describido en [COFF71].
+
+El matriz de asignación y disponilidad (previamente descrita) son usados. Además, una matriz de de solucituds $Q$ es definida tal que $Q_{ij}$ representa la cantidad de recusos de tipo $j$ solicitados por el proceso $i$. El algoritmo procede marcando procesos que no están interbloqueados. Inicialmente, todos los procesos son desmarcados. Después los siguientes pasos son:
+
+\begin{enumerate}
+	\item Marcar cada proceso que tiene una fila en la matriz de asignación de ceros.
+	\item Inicializar un vector temporal $W$ que equivale al vector de disponilidad.
+	\item Encontrar un índice $i$ tal que ese proceso $i$ está actualmente desmarcado y el $i$ma fila de $Q$ is menor o igual a $W$. Esto es, $Q_{ik} \leq W_k$, para $1 \leq k \leq m$. Si dicha fila no es encontrada, termina el algoritmo.
+	\item Si dicha fila es encontrada, marca el proceso $i$ y añade la fila correspondiente de la matriz de asignación a $W$. Esto es $W_k = W_k + A_{ik}$, para $1 \leq k \leq m$. Regresa al paso 3.
+\end{enumerate}
+
+\subsubsection{Recuperación}
+
+Una vez que se ha detectado un interbloqueo, se necesita alguna estrategia para la recuperación. A continuación se presentan en orden de sofisticación creciente las posibles aproximaciones:
+
+\begin{enumerate}
+	\item Abortar todos los procesos en interbloqueo. Esto es, lo creas o no, una de las soluciones más comunes, si no la más común, adoptada en los sistemas operativos.
+	\item Respaldar cada proceso en interbloqueo hasta algún punto de control previamente definido, y reiniciar todos los procesos. Esto requiere que los mecanismos de retroceso y reinicio estén integrados en el sistema. El riesgo de este enfoque es que el interbloqueo original pueda volver a ocurrir. Sin embargo, la no determinancia del procesamiento concurrente puede asegurar que esto no suceda.
+	\item Abortar sucesivamente procesos en interbloqueo hasta que el interbloqueo ya no exista. El orden en que se seleccionan los procesos para la abortación debería basarse en algún criterio de costo mínimo. Después de cada abortación, el algoritmo de detección debe ser reinvocado para verificar si el interbloqueo todavía existe.
+	\item Preocupar sucesivamente recursos hasta que el interbloqueo ya no exista. Al igual que en el punto (3), se debe utilizar una selección basada en el costo, y se requiere la reinvocación del algoritmo de detección después de cada preemción. 
+\end{enumerate}
 
 \clearpage
 \section{Cuestionario}
@@ -229,39 +370,45 @@
 \begin{enumerate}
 	\item ¿En qué consiste el problema de la concurrencia?
 
-
+	El problema de la concurrencia se refiere a la gestión de múltiples procesos o hilos que comparten recursos, como la memoria o dispositivos de entrada/salida, en un sistema computacional. El objetivo es garantizar que estos procesos se ejecuten de manera eficiente y coordinada, evitando problemas como interbloqueos, inanición o condiciones de carrera.
 
 	\item ¿Cuáles son los procesos concurrentes cooperantes?
 
+	Los procesos concurrentes cooperantes son aquellos que trabajan juntos hacia un objetivo común. Esto implica que los procesos comparten información y recursos de manera coordinada para lograr una tarea específica de manera eficiente y sin conflictos.
 
 
 	\item ¿En qué consiste la Exclusión mutua?
 
+	La exclusión mutua es un concepto fundamental en la concurrencia que se refiere a la necesidad de garantizar que solo un proceso a la vez pueda acceder a un recurso compartido. Esto se logra mediante técnicas como semáforos, bloqueos o mutex (bloqueo mutuo), para evitar condiciones de carrera y garantizar la coherencia de los datos.
 
 
 	\item Defina Interbloqueo.
 
-
+	El interbloqueo (deadlock) ocurre cuando dos o más procesos o hilos quedan atrapados en un ciclo de espera circular, donde cada proceso espera que otro libere un recurso necesario para continuar. Como resultado, ninguno de los procesos puede avanzar y el sistema se paraliza.
 
 	\item Defina Inanición.
+
+	La inanición (starvation) ocurre cuando un proceso o hilo válido no puede ejecutarse de manera adecuada o no recibe acceso a los recursos que necesita debido a la priorización de otros procesos. Esto puede resultar en un rendimiento degradado o en la imposibilidad de que ciertos procesos completen sus tareas.
 
 
 
 	\item Defina Excesiva Cortesía.
 
+	La excesiva cortesía (excessive politeness) se refiere a una situación en la que un proceso o hilo cede recursos o prioridad de manera excesiva, lo que puede conducir a un rendimiento ineficiente o incluso a la inanición de otros procesos que también requieren recursos.
 
 
 	\item ¿Qué son los Hilos?
 
-
+	Los hilos (threads) son unidades de ejecución más pequeñas dentro de un proceso. Comparten recursos y memoria con otros hilos del mismo proceso, lo que permite una ejecución concurrente y paralela de tareas dentro de una aplicación.
 
 	\item ¿Qué son los Semáforos?
 
+	Los semáforos son una herramienta de sincronización utilizada en sistemas operativos para controlar el acceso a recursos compartidos por múltiples procesos o hilos. Pueden ser binarios (semáforos mutex) para la exclusión mutua o contadores para controlar el acceso concurrente a recursos limitados.
 
 
 	\item ¿Qué es lo que mejora el tener más de un núcleo?
 
-	
+	Tener más de un núcleo en un procesador (multicore) mejora la capacidad de procesamiento y la capacidad de ejecutar múltiples tareas de manera simultánea. Esto permite una mayor eficiencia en la ejecución de procesos concurrentes y paralelos, lo que resulta en un mejor rendimiento general del sistema.	
 \end{enumerate}
 
 % Referencias
