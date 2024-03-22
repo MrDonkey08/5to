@@ -204,24 +204,52 @@
 \clearpage
 \section{Introducción}
 
+El algoritmo Regresión Lineal con Gradiente Descendente es muy interesante debido a que mezcla muchas áreas de las matemáticas. Este algoritmo consiste en tomar dos conjuntos de datos relacionados y, en base a estos, generar una función lineal la cual, en base a un valor dado, te regresará una predicción del valor que muy probablemente podría estar relacionado con este. En otras palabras, es un modelo que permite predecir el comportamiento de una variable dependiente respecto a una variable independiente.
+
 \subsection{Objetivos Generales}
 
 \begin{itemize}
-	\item 
+	\item Implementar el paradigma de programación dinmámica en el algoritmo de Regresión Lineal con Gradiente Descendente
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 
 \begin{itemize}
-	\item 
+	\item Dado un conjunto de datos, desarrollar el algoritmo de Regresión Lineal con Gradiente Descendente para poder obtener una función lineal el cual permita predecir el comportamiento de un valor dependiente en base a un valor independiente.
 \end{itemize}
 
 \section{Desarrollo}
 
+\begin{itemize}
+	\item \texttt{read():} Esta función se encarga de leer un archivo CSV seleccionado por el usuario mediante un cuadro de diálogo. Utiliza la librería pandas para leer el archivo y extraer los datos necesarios para el análisis.
+
+	\item \texttt{get\_countries(df):} Recibe un DataFrame como entrada y devuelve una lista de los países presentes en el DataFrame. Esta función forma parte del proceso de lectura de datos del archivo CSV.
+
+	\item \texttt{get\_prizes(df):} Similar a la función anterior, recibe un DataFrame y devuelve una lista de los premios Nobel per cápita presentes en el DataFrame. También forma parte del proceso de lectura de datos.
+
+	\item \texttt{get\_consumption(df):} Recibe un DataFrame y devuelve una lista del consumo per cápita de chocolate presente en el DataFrame. Es otra función utilizada durante la lectura de datos del archivo CSV.
+
+	\item \texttt{gen\_sums\_exps(x, y):} Esta función genera expresiones matemáticas relacionadas con la suma de residuos cuadrados y las pendientes. Recibe dos listas como entrada (x e y) que representan las variables relacionadas en el análisis.
+
+	\item \texttt{loss\_fn(intercept, slope, exp\_sums, exp\_intercept, exp\_slope, x):} La función loss\_fn calcula la pérdida (residual) y actualiza las pendientes y la intersección utilizando el algoritmo de descenso de gradiente. Toma como entrada las pendientes, la intersección y las expresiones generadas previamente, junto con la lista de valores de la variable x.
+
+	\item \texttt{main():} La función principal del programa. Realiza la lectura de datos, genera las expresiones matemáticas necesarias, y ejecuta el algoritmo de descenso de gradiente para obtener una estimación basada en los datos proporcionados.
+\end{itemize}
+
 \subsection{Implementación del Algoritmo}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{img/image.jpg}
+	\caption{Resultado Final}
+\end{figure}
 
 \clearpage
 \section{Conclusión}
+
+En retrospecitva, la regresión lineal con gradiente descendente, es un algoritmo que permite estimar de manera eficiente el valor minimo de una función, para así poder determinar una función que permita predecir el comportamiento de dos variables en base a un conjunto de datos.
+
+Para finalizar, la programación dinámica es un paradigma muy interesante que consiste en evitar que operaciones efectuadas no tengan que ser recalculadas, sino que estas se guarden en un espacio de memoria para que primeramente la operación sea consultada. Si bien puede reducir significativamente la cantidad de operaciones y, por ende el tiempo de ejecución de un algoritmo, tiene su contraparte, este requiere de un uso de memoria adicional, por lo que se tiene que tomar en cuenta si esto no conllevaría a problemas en el sistema en donde se implemente este algoritmo.
 
 % Referencias
 
