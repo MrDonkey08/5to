@@ -1,3 +1,6 @@
 [submodule "Actividad4"]
     path = analisis-de-algoritmos/actividades/2-fuerza-bruta/4-edicion-de-cadena-de-caracteres
     url = git@github.com:Forajido24/Actividad4.git
+[submodule "sistemas-operativos/scripts"]
+	path = sistemas-operativos/scripts
+	url = git@github.com:MrDonkey08/so_scripts.git
