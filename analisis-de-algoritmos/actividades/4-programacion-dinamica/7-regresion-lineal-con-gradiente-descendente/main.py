@@ -3,8 +3,6 @@ import os
 import numpy as np
 import sympy as sp
 from tkinter import filedialog
-import matplotlib.pyplot as plt
-
 
 LEARNING_RATE = 0.1 
 MIN_STEP_SIZE = 0.001
@@ -85,9 +83,11 @@ def main():
 		residual, intercept, slope, intercept_step_size, slope_step_size = loss_fn(intercept, slope, exp_sums, exp_intercept, exp_slope, prizes)
 		num_steps += 1
 
+	print("The generated equation is y =", intercept, "+", slope, "* x\n") # Linear regresion with Gradient Descent equation
+
 	input_value = float(input("Digit a value: "))
 
-	print("The estimaded value for", input_value, "is",  intercept + slope * input_value) # Linear regresion with Gradient Descent equation
+	print("\nThe estimaded value for", input_value, "is",  intercept + slope * input_value) 
 
 if __name__ == "__main__":
 	main()
