@@ -3,10 +3,12 @@ import os
 import numpy as np
 import sympy as sp
 from tkinter import filedialog
+import random
 
 LEARNING_RATE = 0.1 
 MIN_STEP_SIZE = 0.001
 MAX_NUM_STEPS = 100
+RAND_FACT = 0.5
 
 # CSV Functions!
 
@@ -75,12 +77,41 @@ def main():
 	residual = slope = num_steps = intercept = 0
 	slope = 1
 
+	intercepts = []
+	slopes = []
+
 	intercept_step_size = slope_step_size = MIN_STEP_SIZE + 1
 
 	exp_sums, exp_intercept, exp_slope = gen_sums_exps(prizes, consumption)
 	
 	while (slope_step_size > MIN_STEP_SIZE or intercept_step_size > MIN_STEP_SIZE) and num_steps < MAX_NUM_STEPS:
 		residual, intercept, slope, intercept_step_size, slope_step_size = loss_fn(intercept, slope, exp_sums, exp_intercept, exp_slope, prizes)
+
+		rand_num = random.random() # between 0 and 1
+
+		intercepts.append(intercept)
+		slopes.append(slope)
+
+		if rand_num > RAND_FACT:
+			intercept_step_size += rand_num
+			slope_step_size += rand_num
+
+			residual, intercept, slope, intercept_step_size, slope_step_size = loss_fn(intercept, slope, exp_sums, exp_intercept, exp_slope, prizes)
+
+			intercepts.append(intercept)
+			slopes.append(slope)
+
+			if intercepts[-1] > intercepts[-2]:
+				intercept = intercepts[-1]
+			else: 
+				intercepts.pop()
+
+			if slopes[-1] > slopes[-2]:
+				slope = slopes[-1]
+			else:
+				slopes.pop()
+
+
 		num_steps += 1
 
 	print("The generated equation is y =", intercept, "+", slope, "* x\n") # Linear regresion with Gradient Descent equation
