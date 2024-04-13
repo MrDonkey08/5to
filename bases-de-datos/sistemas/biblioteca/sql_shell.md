@@ -2,14 +2,14 @@
 
 ## Sistema de Gestión de Empleado
 
-![ | center](image/Untitled%204-1708917898793.jpeg)
+![ | center](img/1-empleado.jpeg)
 
-![ | center](image/Untitled%204-1708917949755.jpeg)
+![ | center](img/2-empleado.jpeg)
 
 <div style="page-break-after: always;"></div>
 
 ## Sistema de Gestión de Biblioteca
 
-![ | center](image/Untitled%204-1708920086965.jpeg)
+![ | center](img/3-biblioteca.jpeg)
 
-![ | center](image/Untitled%204-1708920108662.jpeg)
+![ | center](img/4-biblioteca.jpeg)
