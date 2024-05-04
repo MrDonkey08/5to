@@ -1,6 +1,6 @@
 [submodule "Actividad4"]
-    path = analisis-de-algoritmos/actividades/2-fuerza-bruta/4-edicion-de-cadena-de-caracteres
-    url = git@github.com:Forajido24/Actividad4.git
+	path = analisis-de-algoritmos/actividades/2-fuerza-bruta/4-edicion-de-cadena-de-caracteres
+	url = git@github.com:Forajido24/Actividad4.git
 [submodule "sistemas-operativos/scripts"]
 	path = sistemas-operativos/scripts
 	url = git@github.com:MrDonkey08/so_scripts.git
@@ -10,3 +10,6 @@
 [submodule "analisis-de-algoritmos/actividades/5-algoritmos-voraces/7-huffman"]
 	path = analisis-de-algoritmos/actividades/5-algoritmos-voraces/7-huffman
 	url = git@github.com:MrDonkey08/compresion_huffman.git
+[submodule "huffman_fork"]
+	path = analisis-de-algoritmos/actividades/5-algoritmos-voraces/7-huffman_fork
+	url = git@github.com:MrDonkey08/huffman.git
