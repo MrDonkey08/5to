@@ -1,0 +1,343 @@
+\documentclass[12pt, a4paper]{article} % Formato de plantlla que vamos a utilizar
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{setspace}
+\usepackage[margin=2.5cm, left=3cm, right=2cm, includefoot]{geometry}
+\usepackage{graphicx} % Inserción de imágenes
+\usepackage[dvipsnames, table, xcdraw]{xcolor}
+\usepackage[most]{tcolorbox} % Inserción de cuadros en la portada
+\usepackage{fancyhdr} % Definir el estilo de la página
+\usepackage[hidelinks]{hyperref} % Gestión de hipervínculos
+\usepackage{listings} % Para la inserción de código
+\usepackage{parskip} % Arreglo de la tabulación en el documento
+\usepackage[figurename=Fig.]{caption} % Cambiar el nombre del caption de las fotos
+\usepackage{smartdiagram} % Inserción de Diagramas
+\usepackage{zed-csp} % Inserción de esquemas
+\usepackage{hyperref} % Para hipervínculos
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{blindtext} % Solo para generar texto de relleno, puedes eliminar esta línea en tu documento final.
+\usepackage{natbib}
+\usepackage{array} % <-- Add this line for m{} column type
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt} % Elimina la línea del encabezado
+\setlength{\headheight}{15pt} % Ajuste necesario para evitar warnings
+
+% Configuración de fuentes
+\usepackage{times} % Times New Roman
+
+% Ajustes de formato
+\renewcommand{\baselinestretch}{1.15} % Espaciado de línea anterior
+\setlength{\parskip}{6pt} % Espaciado de línea anterior
+\setlength{\parindent}{0pt} % Sangría
+
+% Declaración de colores
+\definecolor{greenPortada}{HTML}{69A84F}
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{codegreen}{rgb}{0, 0.6, 0}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.92}
+
+% Esilo de enlaces
+\hypersetup{
+	colorlinks=true,
+	linkcolor=greenPortada,
+	filecolor=greenPortada,
+	urlcolor=greenPortada,
+	pdftitle={Overleaf Example},
+	pdfpagemode=FullScreen,
+}
+
+\urlstyle{same}
+
+% Estilo de bloques de código
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Declaración de variables
+\newcommand{\logoUdg}{../../../../attachments/images/portada-udg.jpeg}
+\newcommand{\logoCucei}{../../../../attachments/images/portada-cucei.jpeg}
+
+% Datos de la Materia
+\newcommand{\materia}{Sistemas Operativos}
+\newcommand{\theTitle}{8. Seguridad y Protección}
+\newcommand{\profesor}{Violeta del Rocío Becerra Velázquez}
+\newcommand{\theAuthor}{Alan Yahir Juárez Rubio}
+\newcommand{\code}{218517809}
+\newcommand{\carrera}{Ingeniería en Cómputo}
+\newcommand{\seccion}{D04}
+\newcommand{\startDate}{09 de mayo de 2024}
+
+% Espaciado
+\newcommand{\nl}{\par\vspace{0.4cm}}
+
+% Adicionales
+\addto\captionsspanish{\renewcommand{\contentsname}{Índice}}
+\setlength{\headheight}{60pt}
+\pagestyle{fancy}
+
+% Encabezado
+\fancyhf{}
+\lhead{
+	\begin{minipage}[c][2cm][c]{1.3cm}
+		\begin{flushleft}
+			\includegraphics[width=5cm, height=1.4cm, keepaspectratio]{\logoUdg}
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}[c][2cm][c]{0.5\textwidth} % Adjust the height as needed
+		\begin{flushleft}	
+		{\ifodd\value{page}\materia\fi}
+		\end{flushleft}
+	\end{minipage}
+}
+\rhead{
+		\begin{minipage}[c][2cm][c]{0.4\textwidth} % Adjust the height as needed
+			\begin{flushright}
+				{\ifodd\value{page}\else\theTitle\fi}
+			\end{flushright}
+		\end{minipage}
+		\begin{minipage}[c][2cm][c]{1.3cm}
+			\begin{flushright}
+				\includegraphics[width=5cm, height=1.4cm, keepaspectratio]{\logoCucei}
+			\end{flushright}
+		\end{minipage}
+}
+
+% Pie de página
+\rfoot{\ifodd\value{page}\theAuthor\fi}
+
+\renewcommand{\headrulewidth}{3pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{greenPortada}\leaders\hrule height \headrulewidth\hfill}}
+
+\renewcommand{\lstlistingname}{Código} % Para cambiar el caption de los código
+%\renewcommand\thepage{\ifodd\value{page}\else\arabic{page}\fi}
+
+\title{\theTitle}
+\author{\theAuthor}
+
+% Comienzo del Documento
+\begin{document}
+\cfoot{\ifodd\value{page}\else\thepage\fi} % Paginación
+\setstretch{1}
+
+\begin{titlepage}
+	\centering
+	{\huge\textbf{Universidad de Guadalajara}}\par\vspace{0.6cm}
+	{\LARGE{Centro Universitario de Ciencias Exactas e Ingenierías}}\vfill
+	
+	\begin{figure}[h]
+		\begin{minipage}[t]{0.45\textwidth}
+			\centering
+			\includegraphics[width=130px, height=300px, keepaspectratio]{\logoUdg}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{0.45\textwidth}
+			\centering
+			\includegraphics[width=130px, height=300px, keepaspectratio]{\logoCucei}
+		\end{minipage}
+	\end{figure}\vfill
+	
+	{\Large{División de Tecnologías para la Integración CiberHumana}}\vfill
+	{\Large\textbf{\materia}}\vfill
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}[t]{0.75\textwidth}
+			{\Large
+				\textbf{Profesor:} \profesor\nl
+				\textbf{Alumno:} \theAuthor\nl
+				\textbf{Código:} \code\nl
+				\textbf{Carrera:} \carrera\nl
+				\textbf{Sección:} \seccion
+			}
+		\end{minipage}
+	\end{figure}\vfill
+	{\LARGE{\textbf{\theTitle}}}\vfill
+	
+	\begin{tcolorbox}[colback=red!5!white, colframe=red!75!black]
+		\centering
+		Este documento contiene información sensible.\\
+		No debería ser impreso o compartido con terceras entidades.
+	\end{tcolorbox}\vfill
+	{\large \startDate}\par
+\end{titlepage}
+
+% Índices
+\clearpage
+\tableofcontents
+
+%\clearpage
+%\listoffigures
+	
+%\clearpage
+%\listoftables
+% Fin de Índices
+
+\clearpage
+\section{Criptografia}
+
+La \textbf{criptografía} es una técnica que permite proveer seguridad a la información y a la comunicación. Esta consiste en codificar el contenido de un archivo o de un texto de tal manera que solamente pueda desencriptarlo el o los usuarios a los que están destinada esta información.
+
+En \textbf{criptografía} las técnicas que se utilizan para proteger la información se obtienen a partir de conceptos matemáticos y un conjunto de cálculos basados en reglas conocidos como algoritmos para convertir mensajes de manera que resulte difícil decodificarlos.
+
+\subsection{Tipos de Criptografía}
+
+\begin{itemize}
+	\item \textbf{Símétrico}: Algoritmo en donde el emisor y el receptor de un mensaje usan solamente una llave para encriptar y desencriptar mensajes. Este es rápido y simple, sin embargo, el problema reside en que el emisor y el receptor tienen que intercambiar llaves de forma segura.
+	
+	\item \textbf{Asimétrico}: A diferencia del simétrico, este sistema utiliza una llave para encriptar la información (llave pública) y otra llave para descencriptarla (llave privada). El emisor utiliza la \textbf{llave pública} del destinatario para encriptar la información y el receptor utiliza su \textbf{llave privada} para desencriptar dicho mensaje.
+	
+	\item \textbf{Funciones Hash}: En este algoritmo no se utilizan llaves. Se calcula un valor \textit{hash} con una longitud fija según el texto sin formato. Esto hace imposible recuperar el contenido del texto sin formato.
+\end{itemize}
+
+\subsection{Criptografia en Sistemas Operativos}
+
+En los SO's, la \textbf{criptografía} es vital para garantizar la seguridad y privacidad del usuario. Algunas de sus aplicaciones son:
+
+\begin{itemize}
+	\item \textbf{Contraseñas:} Al crear una contraseña, se utiliza una función hash para convertir la contraseña en un \textit{hash}; este valor es almacenado. Al iniciar sesión, al introducir una contraseña, se genera un \textit{hash} y es comparado con el \textit{hash} de la contraseña original.
+
+	\item \textbf{Cifrado de datos}: Los SO's utilizan algoritmos de cifrado para proteger datos sensibles almacenados en dispositivos de almacenamiento. Esto asegura que los datos estén protegidos en caso de acceso no autorizado
+
+	\item \textbf{Firmas digitales y verificación de integridad}: Los sistemas operativos pueden utilizar firmas digitales para verificar la autenticidad e integridad de los archivos y programas. Esto ayuda a prevenir la ejecución de software malicioso o la modificación no autorizada de archivos del sistema.
+\end{itemize}
+
+\subsection{Criptografía en Redes}
+
+En redes informáticas, la \textbf{criptografía} es de gran imporancia debido a que garantiza una comunicación privada y segura entre los diferentes equipos de la red. Algunas de sus aplicaciones son:
+
+\begin{itemize}
+	\item \textbf{Navegación web segura}: Protege a los usuarios de escuchas y ataques de intermediarios. Los protocolos Secure Sockets Layer (SSL) y Transport Layer Security (TLS) utilizan la criptografía de clave pública para cifrar los datos enviados entre el servidor web y el cliente, estableciendo un canal seguro para la comunicación.
+
+	\item \textbf{Cifrado de datos en tránsito}: La criptografía se utiliza para cifrar los datos que se transmiten a través de redes informáticas, como Internet. Protocolos como SSL/TLS, IPsec y SSH utilizan algoritmos criptográficos para garantizar la confidencialidad y la integridad de los datos durante la transmisión, protegiéndolos de la interceptación y la manipulación por parte de terceros.
+
+	\item \textbf{Autenticación y autorización}: La criptografía se emplea en los procesos de autenticación y autorización para verificar la identidad de los usuarios y garantizar que solo tengan acceso a los recursos para los que están autorizados. Los protocolos como Kerberos y sistemas de autenticación de dos factores utilizan técnicas criptográficas para verificar la identidad de los usuarios de manera segura
+\end{itemize}
+
+\clearpage
+\section{Esteganografía}
+
+La \textbf{esteganografía} es el arte y la ciencia de ocultar mensajes dentro de otros mensajes o archivos de manera que el mensaje oculto no sea aparente para un observador casual.
+
+\subsection{Técnicas Esteganográficas}
+
+\begin{itemize}
+	\item \textbf{Enmascaramiento}: En este caso la información se oculta dentro de una imagen digital usando marcas de agua donde se introduce información, como el derecho de autor, la propiedad o licencias. El objetivo es diferente de la esteganografía tradicional, lo que se pretende es añadir un atributo a la imagen que actúa como cubierta. De este modo se amplía la cantidad de información presentada.
+
+	\item \textbf{Compresión de Datos}: Esta técnica oculta datos basados en funciones matemáticas que se utilizan a menudo en algoritmos de la compresión de datos. La idea de este método es ocultar el mensaje en los bits de datos menos importantes.
+
+	\item \textbf{Métodos de Sustitución}: Una de las formas más comunes de hacer esto es alterando el bit menos significativo (LSB). En archivos de imagen, audio y otros, los últimos bits de información en un byte no son necesariamente tan importantes como los iniciales. Por ejemplo, 10010010 podría ser un tono de azul. Si solo cambiamos los dos últimos bits a 10010001, podría ser un tono de azul que es casi exactamente igual. Esto significa que podemos ocultar nuestros datos secretos en los dos últimos bits de cada píxel de una imagen, sin cambiar la imagen de forma notable. Si cambiamos los primeros bits, lo alteraría significativamente.
+\end{itemize}
+
+\subsection{Esteganografía en Sistemas Operativos}
+
+\begin{itemize}
+	\item \textbf{Marca de agua digital}: La esteganografía también se utiliza en sistemas operativos para insertar marcas de agua digitales en archivos multimedia, como imágenes o videos. Estas marcas de agua pueden contener información sobre el propietario del archivo o cualquier otro dato relevante, y se pueden utilizar para verificar la autenticidad o la propiedad del archivo.
+
+	\item \textbf{Protección de la privacidad}: La esteganografía puede utilizarse en sistemas operativos para proteger la privacidad de los usuarios al ocultar información personal o confidencial dentro de archivos multimedia o de otro tipo. Esto puede ser útil para evitar la exposición de datos privados en caso de acceso no autorizado a dispositivos o sistemas.
+\end{itemize}
+
+\subsection{Esteganografía en Redes}
+
+\begin{itemize}
+	\item \textbf{Comunicación encubierta}: La esteganografía se puede utilizar para ocultar mensajes dentro de archivos multimedia, como imágenes, audio o videos, que se comparten a través de redes públicas o privadas. Estos mensajes ocultos pueden transmitirse sin atraer la atención no deseada, proporcionando una forma encubierta de comunicación entre partes interesadas.
+
+	\item \textbf{Camuflaje de datos confidenciales}: En entornos donde la seguridad de la información es crucial, la esteganografía se puede utilizar para ocultar datos confidenciales dentro de archivos multimedia que se transmiten a través de redes. Esto proporciona una capa adicional de protección para los datos sensibles, ya que el contenido oculto puede pasar desapercibido para cualquier persona que intercepte la comunicación.
+\end{itemize}
+
+\clearpage
+\section{La Importancia de la Seguridad y Protección en Sistemas Operativos y Redes}
+
+En la actualidad la seguridad y protección de la información son aspectos críticos tanto en sistemas operativos como en redes. Con el crecimiento exponencial de amenazas cibernéticas, es crucial comprender la importancia de implementar medidas de seguridad efectivas para proteger nuestros datos y sistemas. Este ensayo explora la relevancia de la seguridad en sistemas operativos y redes, así como el papel fundamental que desempeña el usuario en garantizar su cumplimiento.
+
+\subsection{Seguridad en Sistemas Operativos y Redes}
+
+Los sistemas operativos actúan como la columna vertebral de cualquier dispositivo informático, desde computadoras personales hasta servidores en la nube. La seguridad en los sistemas operativos es esencial para proteger la integridad, confidencialidad y disponibilidad de los datos. Esto implica implementar medidas como el cifrado de datos, el control de acceso, la autenticación robusta y la gestión adecuada de claves.
+
+Por otro lado, las redes son el medio a través del cual los dispositivos se comunican entre sí, permitiendo el intercambio de información y recursos. La seguridad en las redes es crucial para proteger la información mientras viaja a través de ellas. Esto implica asegurar la infraestructura de red, implementar protocolos de seguridad como SSL/TLS, IPsec, y VPNs, y monitorear el tráfico de red en busca de actividades maliciosas.
+
+\subsection{El Papel del Usuario en la Seguridad}
+
+Aunque los sistemas operativos y las redes pueden estar equipados con diversas medidas de seguridad, el eslabón más débil en la cadena de seguridad suele ser el factor humano: el usuario. El comportamiento y las acciones del usuario pueden influir significativamente en la efectividad de las medidas de seguridad implementadas.
+
+El primer paso para mejorar la seguridad es la concienciación del usuario. Los usuarios deben comprender los riesgos potenciales y las mejores prácticas de seguridad, como la creación de contraseñas seguras, la actualización regular del software, y la evitación de clics en enlaces o archivos sospechosos.
+
+Además, los usuarios deben ser responsables de proteger sus propios dispositivos y datos. Esto implica tomar precauciones como no compartir contraseñas, utilizar autenticación de dos factores siempre que sea posible, y evitar la descarga de software de fuentes no confiables.
+
+\subsection{El Papel del Desarrollador en la Seguridad}
+
+Los desarrolladores de programas, redes y sistemas operativos juegan un papel fundamental en la protección y la seguridad de la infraestructura digital. Su capacidad para diseñar, desarrollar e implementar soluciones seguras tiene un impacto directo en la prevención de vulnerabilidades y la mitigación de riesgos cibernéticos.
+
+\begin{itemize}
+	\item \textbf{Diseño seguro}: Los desarrolladores deben considerar la seguridad desde el inicio del proceso de desarrollo, identificando riesgos y requisitos de seguridad, y diseñando sistemas con controles adecuados.
+
+	\item \textbf{Codificación segura}: Es crucial seguir buenas prácticas de codificación para evitar vulnerabilidades, como validar la entrada de datos y usar bibliotecas seguras, además de realizar pruebas exhaustivas de seguridad.
+
+	\item \textbf{Implementación de controles de acceso}: Los desarrolladores deben asegurarse de que los sistemas cuenten con mecanismos de autenticación y autorización sólidos para proteger los recursos y datos sensibles.
+
+	\item \textbf{Actualización y mantenimiento}: Proporcionar actualizaciones regulares de seguridad, corrigiendo vulnerabilidades y respondiendo rápidamente a nuevas amenazas, es esencial para proteger a los usuarios contra ataques cibernéticos.
+
+	\item \textbf{Educación y concienciación}: Los desarrolladores deben educar a otros sobre la importancia de la seguridad cibernética, promoviendo una cultura de seguridad y concienciando sobre las mejores prácticas para reducir el riesgo de incidentes de seguridad.
+\end{itemize}
+
+\subsection{Importancia de la Educación en Seguridad Cibernética}
+
+La educación en seguridad cibernética juega un papel crucial en la protección de sistemas operativos y redes. Los usuarios deben recibir capacitación regular sobre cómo identificar y evitar amenazas cibernéticas, así como sobre cómo responder adecuadamente en caso de incidentes de seguridad.
+
+Las instituciones educativas, empresas y organizaciones gubernamentales deben colaborar para ofrecer programas de educación en seguridad cibernética que aborden las necesidades específicas de diversos grupos de usuarios, desde estudiantes hasta profesionales de la tecnología de la información.
+
+\subsection{Conclusión}
+
+En retrospectiva, la seguridad y protección en sistemas operativos y redes son fundamentales en la era digital actual. La implementación de medidas de seguridad efectivas es esencial para proteger nuestros datos y sistemas contra las crecientes amenazas cibernéticas. Sin embargo, estas medidas solo serán efectivas si los usuarios también juegan su papel en la protección de sus dispositivos y datos. La concienciación, la educación y la responsabilidad del usuario son clave para garantizar un entorno digital seguro y protegido para todos.
+
+Para finalizar, es importante mencionar que una gran cantidad de sistemas han sido comprometidos debido a diversos errores cometidos por usuarios, por lo que el factor humano y la psicología inversa es una de los principales vías para vulnerabilizar sistemas. Por consiguiente, me parece esencial que cualquier individuo que utilice un dispositivo electrónico debería de tener una educación sobre el cómo evitar y protegerse frente a este tipo de ataques.
+
+\clearpage
+\section{Resumen de la película "Hackers" (1995)}
+
+a trama sigue a un grupo de jóvenes hackers talentosos que se encuentran en el centro de una conspiración de alto riesgo cuando descubren un plan para robar millones de dólares de una empresa de seguridad informática.
+
+El protagonista, interpretado por Jonny Lee Miller, es un hacker adolescente con habilidades extraordinarias, quien se ve envuelto en una serie de eventos después de ser acusado injustamente de un delito informático. Junto con sus amigos, incluyendo a Angelina Jolie en uno de sus primeros papeles destacados, utilizan sus habilidades técnicas para desenmascarar al verdadero culpable y evitar un desastre informático a gran escala.
+
+La película explora temas como la ética en el hacking, la privacidad en línea, la vigilancia gubernamental y la manipulación de la información digital. A través de una mezcla de acción, intriga y elementos de la cultura hacker de los años 90, "Hackers" ofrece una mirada entretenida y a veces exagerada al mundo de la seguridad informática y la vida en la era digital.
+
+\clearpage
+\section{Conclusión}
+
+Desde mi punto de vista, la criptografía y esteganografía son dos temas muy interestantes en la seguridad informática, ya que proveen al usuario diferentes técnicas para garantizar una privacidad al usuario y una medida de seguridad al uso de los datos.
+
+Para finalizar, me parece importante que cada una de las personas tenga noción (no necesariamente técnica) del cómo funciona cada una de las medidas de seguridad de un SO o de una red y que, además, tenga noción del cómo protegerse y prevenirse frente a los diferentes ciberataques.
+
+% Referencias
+
+\nocite{*} % Para incluir todas las referencias sin necesidad de citarlas
+
+\clearpage
+\bibliographystyle{apalike}
+\bibliography{ref}
+
+% Set the PDF file name
+
+\end{document}
