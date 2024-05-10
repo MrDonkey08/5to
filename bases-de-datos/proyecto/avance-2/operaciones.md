@@ -5,29 +5,55 @@
 ### Inserción
 
 ```sql
-INSERT INTO Contacto (Nombre, Telefono)
-VALUES
-	('Juan Pérez', '1234567890'),
-	('María García', '9876543210'),
-	('Pedro López', '5555555555'),
-	('Ana Martínez', '7777777777'),
-	('Sofía Hernández', '3333333333');
+INSERT INTO Contacto (Nombre, Telefono) VALUES
+	('Juan Pérez', '555-1234'),
+	('María García', '555-5678'),
+	('Carlos López', '555-9012'),
+	('Ana Martínez', '555-3456'),
+	('Pedro Ramírez', '555-7890');
 
-INSERT INTO Direccion (Calle, Numero_exterior, Colonia, Entidad, Tipo_de_Residencia, Ubicacion)
-VALUES
-	('Calle 123', 100, 'Colonia Centro', 'Ciudad de México', 'Casa', 'CDMX'),
-	('Avenida Principal', 500, 'Colonia Norte', 'Guadalajara', 'Departamento', 'Jalisco'),
-	('Calle Secundaria', 250, 'Colonia Sur', 'Monterrey', 'Casa', 'Nuevo León'),
-	('Paseo de las Flores', 1500, 'Colonia Este', 'Puebla', 'Casa', 'Puebla'),
-	('Calle 456', 300, 'Colonia Oeste', 'Querétaro', 'Departamento', 'Querétaro');
+INSERT INTO Ubicacion (Enlace, Latitud, Longitud) VALUES
+	('https://maps.google.com/?q=19.4326,-99.1332', 19.4326, -99.1332),
+	('https://maps.google.com/?q=25.6866,-100.3161', 25.6866, -100.3161),
+	('https://maps.google.com/?q=20.6597,-103.3496', 20.6597, -103.3496),
+	('https://maps.google.com/?q=22.3964,-97.6569', 22.3964, -97.6569),
+	('https://maps.google.com/?q=16.7569,-93.1292', 16.7569, -93.1292);
 
-INSERT INTO Derrumbe (Descripcion, Necesidades, Tipo_de_Dano, Estatus, ID_Contacto, ID_Direccion)
-VALUES
-	('Derrumbe en la zona norte', 'Rescate urgente', 'Estructural', 'Pendiente', 1, 1),
-	('Derrumbe parcial en edificio', 'Equipo de demolición', 'Estructural', 'En proceso', 2, 2),
-	('Derrumbe en construcción', 'Rescate de trabajadores', 'Estructural', 'Pendiente', 3, 3),
-	('Deslizamiento de tierra', 'Evacuación de zona afectada', 'Naturaleza', 'En proceso', 4, 4),
-	('Derrumbe en casa abandonada', 'Limpieza de escombros', 'Estructural', 'Resuelto', 5, 5);
+INSERT INTO Municipio (Nombre) VALUES
+	('Ciudad de México'),
+	('Monterrey'),
+	('Guadalajara'),
+	('Veracruz'),
+	('Tuxtla Gutiérrez');
+
+INSERT INTO Estado (Nombre) VALUES
+	('Ciudad de México'),
+	('Nuevo León'),
+	('Jalisco'),
+	('Veracruz'),
+	('Chiapas');
+
+INSERT INTO Direccion (Calle, Numero_exterior, Colonia, Tipo_de_Residencia, ID_Ubicacion, ID_Municipio, ID_Estado) VALUES
+	('Av. Reforma', 123, 'Centro', 'Casa', 1, 1, 1),
+	('Av. Constitución', 456, 'Centro', 'Departamento', 2, 2, 2),
+	('Av. Chapultepec', 789, 'Providencia', 'Casa', 3, 3, 3),
+	('Av. Juárez', 1011, 'Centro', 'Casa', 4, 4, 4),
+	('Av. Central', 1213, 'Centro', 'Departamento', 5, 5, 5);
+
+INSERT INTO Derrumbe (Descripcion, Necesidades, Tipo_de_Dano, Estatus, ID_Contacto, ID_Direccion) VALUES
+	('Derrumbe en edificio de oficinas', 'Equipo de rescate', 'Estructural', 'En curso', 1, 1),
+	('Deslizamiento de tierra en cerro', 'Equipo de excavación', 'Geomorfológico', 'En espera', 2, 2),
+	('Derrumbe de muro de contención', 'Material de construcción', 'Estructural', 'Finalizado', 3, 3),
+	('Desprendimiento de rocas en carretera', 'Equipo de limpieza', 'Geomorfológico', 'En curso', 4, 4),
+	('Colapso de techo en casa habitación', 'Equipo de rescate', 'Estructural', 'En espera', 5, 5);
+
+INSERT INTO Rescatista (Nombre, Telefono, Horas, Puesto) VALUES
+	('Luis Hernández', '555-1111', 40, 'Coordinador'),
+	('Laura Rodríguez', '555-2222', 30, 'Médico'),
+	('Jorge Pérez', '555-3333', 50, 'Rescatista'),
+	('María González', '555-4444', 45, 'Rescatista'),
+	('José Martínez', '555-5555', 35, 'Voluntario');
+
 ```
 
 ### Actualización
@@ -35,15 +61,15 @@ VALUES
 ```sql
 UPDATE Contacto
 SET Nombre = 'Juan Pérez Pérez', Telefono = '1111111111'
-WHERE ID_Contacto = 1;
+WHERE ID = 1;
 
 UPDATE Direccion
 SET Calle = 'Avenida Reforma', Numero_exterior = 250
-WHERE ID_Direccion = 2;
+WHERE ID = 2;
 
 UPDATE Derrumbe
 SET Descripcion = 'Derrumbe en construcción abandonada', Estatus = 'En proceso'
-WHERE ID_Derrumbe = 3;
+WHERE ID = 3;
 ```
 
 ### Eliminación
@@ -53,10 +79,10 @@ DELETE FROM Derrumbe
 WHERE ID_Contacto = 4 OR ID_Direccion = 5;
 
 DELETE FROM Contacto
-WHERE ID_Contacto = 4;
+WHERE ID = 4;
 
 DELETE FROM Direccion
-WHERE ID_Direccion = 5;
+WHERE ID = 5;
 ```
 
 ### Muestreo
@@ -67,20 +93,32 @@ WHERE ID_Direccion = 5;
 
 ```sql
 SELECT * FROM Contacto;
+SELECT * FROM Ubicacion;
+SELECT * FROM Municipio;
+SELECT * FROM Estado;
 SELECT * FROM Direccion;
 SELECT * FROM Derrumbe;
+SELECT * FROM Rescatista;
 ```
 
 ### Vaciado
 
 ```sql
-DELETE FROM Derrumbe;
 DELETE FROM Contacto;
+DELETE FROM Ubicacion;
+DELETE FROM Municipio;
+DELETE FROM Estado;
 DELETE FROM Direccion;
+DELETE FROM Derrumbe;
+DELETE FROM Rescatista;
 ```
 
 ```sql
-ALTER SEQUENCE contacto_id_contacto_seq RESTART WITH 1;
-ALTER SEQUENCE direccion_id_direccion_seq RESTART WITH 1;
-ALTER SEQUENCE derrumbe_id_derrumbe_seq RESTART WITH 1;
+ALTER SEQUENCE contacto_id_seq RESTART WITH 1;
+ALTER SEQUENCE ubicacion_id_seq RESTART WITH 1;
+ALTER SEQUENCE municipio_id_seq RESTART WITH 1;
+ALTER SEQUENCE estado_id_seq RESTART WITH 1;
+ALTER SEQUENCE direccion_id_seq RESTART WITH 1;
+ALTER SEQUENCE derrumbe_id_seq RESTART WITH 1;
+ALTER SEQUENCE rescatista_id_seq RESTART WITH 1;
 ```
