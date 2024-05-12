@@ -5,12 +5,12 @@
 ### Inserción
 
 ```sql
-INSERT INTO Contacto (Nombre, Telefono) VALUES
-	('Juan Pérez', '555-1234'),
-	('María García', '555-5678'),
-	('Carlos López', '555-9012'),
-	('Ana Martínez', '555-3456'),
-	('Pedro Ramírez', '555-7890');
+INSERT INTO Contacto (Nombre, Apellido, Telefono, Correo) VALUES
+	('Juan', 'Pérez', '555-1234', 'juanperez@gmail.com'),
+	('María', 'García', '555-5678', 'magarcia@hotmail.com'), 
+	('Carlos', 'López', '555-9012', 'carlopez@outlook.com'),
+	('Ana', 'Martínez', '555-3456', 'anamartinez@yahoo.com'),
+	('Pedro', 'Ramírez', '555-7890', 'ramirezpedro@gmail.com');
 
 INSERT INTO Ubicacion (Enlace, Latitud, Longitud) VALUES
 	('https://maps.google.com/?q=19.4326,-99.1332', 19.4326, -99.1332),
@@ -34,33 +34,32 @@ INSERT INTO Estado (Nombre) VALUES
 	('Chiapas');
 
 INSERT INTO Direccion (Calle, Numero_exterior, Colonia, Tipo_de_Residencia, ID_Ubicacion, ID_Municipio, ID_Estado) VALUES
-	('Av. Reforma', 123, 'Centro', 'Casa', 1, 1, 1),
-	('Av. Constitución', 456, 'Centro', 'Departamento', 2, 2, 2),
-	('Av. Chapultepec', 789, 'Providencia', 'Casa', 3, 3, 3),
-	('Av. Juárez', 1011, 'Centro', 'Casa', 4, 4, 4),
-	('Av. Central', 1213, 'Centro', 'Departamento', 5, 5, 5);
+	('Av. Reforma', 123, 'Centro', 'Casa'),
+	('Av. Constitución', 456, 'Centro', 'Departamento'),
+	('Av. Chapultepec', 789, 'Providencia', 'Casa'),
+	('Av. Juárez', 1011, 'Centro', 'Casa'),
+	('Av. Central', 1213, 'Centro', 'Departamento');
 
 INSERT INTO Derrumbe (Descripcion, Necesidades, Tipo_de_Dano, Estatus, ID_Contacto, ID_Direccion) VALUES
-	('Derrumbe en edificio de oficinas', 'Equipo de rescate', 'Estructural', 'En curso', 1, 1),
-	('Deslizamiento de tierra en cerro', 'Equipo de excavación', 'Geomorfológico', 'En espera', 2, 2),
-	('Derrumbe de muro de contención', 'Material de construcción', 'Estructural', 'Finalizado', 3, 3),
-	('Desprendimiento de rocas en carretera', 'Equipo de limpieza', 'Geomorfológico', 'En curso', 4, 4),
-	('Colapso de techo en casa habitación', 'Equipo de rescate', 'Estructural', 'En espera', 5, 5);
+	('Derrumbe en edificio de oficinas', 'Equipo de rescate', 'Estructural', 'En curso'),
+	('Deslizamiento de tierra en cerro', 'Equipo de excavación', 'Geomorfológico', 'En espera'),
+	('Derrumbe de muro de contención', 'Material de construcción', 'Estructural', 'Finalizado'),
+	('Desprendimiento de rocas en carretera', 'Equipo de limpieza', 'Geomorfológico', 'En curso'),
+	('Colapso de techo en casa habitación', 'Equipo de rescate', 'Estructural', 'En espera');
 
-INSERT INTO Rescatista (Nombre, Telefono, Horas, Puesto) VALUES
-	('Luis Hernández', '555-1111', 40, 'Coordinador'),
-	('Laura Rodríguez', '555-2222', 30, 'Médico'),
-	('Jorge Pérez', '555-3333', 50, 'Rescatista'),
-	('María González', '555-4444', 45, 'Rescatista'),
-	('José Martínez', '555-5555', 35, 'Voluntario');
-
+INSERT INTO Rescatista (Nombre, Apellido, Telefono, Correo, Horas, Puesto) VALUES
+	('Luis', 'Hernández', '555-1111', 'luis_hernandez@gmail.com', 40, 'Coordinador'),
+	('Laura', 'Rodríguez', '555-2222', 'laura_rodriguez@gmail.com', 30, 'Médico'),
+	('Jorge', 'Pérez', '555-3333', 'jorge_perez@outlook.com', 50, 'Rescatista'),
+	('María'. 'González', '555-4444', 'gonzalez_maria@gmail.com', 45, 'Rescatista'),
+	('José', 'Martínez', '555-5555', 'martinez_jose@hotmail.com', 35, 'Voluntario');
 ```
 
 ### Actualización
 
 ```sql
 UPDATE Contacto
-SET Nombre = 'Juan Pérez Pérez', Telefono = '1111111111'
+SET Nombre = 'Juan', Telefono = '1111111111'
 WHERE ID = 1;
 
 UPDATE Direccion

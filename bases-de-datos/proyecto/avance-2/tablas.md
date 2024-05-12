@@ -12,59 +12,64 @@ CREATE DATABASE derrumbes;
 
 ```sql
 CREATE TABLE Contacto (
-	ID SERIAL PRIMARY KEY,
-	Nombre VARCHAR(80) NOT NULL,
-	Telefono VARCHAR(25) NOT NULL
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(40) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    Correo VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(25) NOT NULL
 );
 
 CREATE TABLE Ubicacion (
-	ID SERIAL PRIMARY KEY,
-	Enlace VARCHAR(200),
-	Latitud DECIMAL(10, 8),
-	Longitud DECIMAL(11, 8)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Enlace VARCHAR(200),
+    Latitud DECIMAL(10, 8) DEFAULT 0,
+    Longitud DECIMAL(11, 8) DEFAULT 0
 );
 
 CREATE TABLE Municipio (
-	ID SERIAL PRIMARY KEY,
-	Nombre VARCHAR(40) NOT NULL
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Estado (
-	ID SERIAL PRIMARY KEY,
-	Nombre VARCHAR(40) NOT NULL
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Direccion (
-	ID SERIAL PRIMARY KEY,
-	Calle VARCHAR(100) NOT NULL,
-	Numero_exterior INT NOT NULL,
-	Colonia VARCHAR(50),
-	Tipo_de_Residencia VARCHAR(30),
-	ID_Ubicacion INT NOT NULL,
-	ID_Municipio INT NOT NULL,
-	ID_Estado INT NOT NULL,
-	FOREIGN KEY (ID_Ubicacion) REFERENCES Ubicacion(ID),
-	FOREIGN KEY (ID_Municipio) REFERENCES Municipio(ID),
-	FOREIGN KEY (ID_Estado) REFERENCES Estado(ID)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Calle VARCHAR(100) NOT NULL,
+    Numero_exterior INT NOT NULL,
+    Colonia VARCHAR(50),
+    Tipo_de_Residencia VARCHAR(30),
+    ID_Ubicacion INT,
+    ID_Municipio INT,
+    ID_Estado INT,
+    FOREIGN KEY (ID_Ubicacion) REFERENCES Ubicacion(ID),
+    FOREIGN KEY (ID_Municipio) REFERENCES Municipio(ID),
+    FOREIGN KEY (ID_Estado) REFERENCES Estado(ID)
 );
 
 CREATE TABLE Derrumbe (
-	ID SERIAL PRIMARY KEY,
-	Descripcion VARCHAR(200) NOT NULL,
-	Necesidades VARCHAR(100),
-	Tipo_de_Dano VARCHAR(40),
-	Estatus VARCHAR(30),
-	ID_Contacto INT NOT NULL,
-	ID_Direccion INT NOT NULL,
-	FOREIGN KEY (ID_Contacto) REFERENCES Contacto(ID),
-	FOREIGN KEY (ID_Direccion) REFERENCES Direccion(ID)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Descripcion VARCHAR(200) NOT NULL,
+    Necesidades VARCHAR(100),
+    Tipo_de_Dano VARCHAR(40),
+    Estatus VARCHAR(30),
+    ID_Contacto INT,
+    ID_Direccion INT,
+    FOREIGN KEY (ID_Contacto) REFERENCES Contacto(ID),
+    FOREIGN KEY (ID_Direccion) REFERENCES Direccion(ID)
 );
 
 CREATE TABLE Rescatista (
-	ID SERIAL PRIMARY KEY,
-	Nombre VARCHAR(80) NOT NULL,
-	Telefono VARCHAR(25) NOT NULL,
-	Horas INT,
-	Puesto VARCHAR(80)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(40) NOT NULL,
+    Apellido VARCHAR(40) NOT NULL,
+    Correo VARCHAR(50) NOT NULL,
+    Telefono VARCHAR(25) NOT NULL,
+    Horas INT,
+    Puesto VARCHAR(80)
 );
+
 ```
