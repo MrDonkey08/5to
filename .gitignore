@@ -32,7 +32,7 @@ templater
 *.xlsx
 *.ppt
 *.pptx
-*.pdf
+#*.pdf
 *.csv 
 *.kdbx
 
