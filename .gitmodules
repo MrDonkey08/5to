@@ -13,3 +13,6 @@
 [submodule "huffman_fork"]
 	path = analisis-de-algoritmos/actividades/5-algoritmos-voraces/7-huffman_fork
 	url = git@github.com:MrDonkey08/huffman.git
+[submodule "vrp"]
+	path = analisis-de-algoritmos/proyecto
+	url = git@github.com:Forajido24/ProyectoFina.git
