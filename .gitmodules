@@ -16,3 +16,9 @@
 [submodule "vrp"]
 	path = analisis-de-algoritmos/proyecto
 	url = git@github.com:Forajido24/ProyectoFina.git
+[submodule "bd_derrumbes"]
+	path = bases-de-datos/bases-de-datos/proyecto/avance-3/
+	url = git@github.com:MrDonkey08/bd_derrumbes.git
+[submodule "bases-de-datos/proyecto/avance-3"]
+	path = bases-de-datos/proyecto/avance-3
+	url = git@github.com:MrDonkey08/bd_derrumbes.git
