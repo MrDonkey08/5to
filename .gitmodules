@@ -15,7 +15,7 @@
 	url = git@github.com:MrDonkey08/huffman.git
 [submodule "vrp"]
 	path = analisis-de-algoritmos/proyecto
-	url = git@github.com:Forajido24/ProyectoFina.git
+	url = git@github.com:Forajido24/ProyectoFinal.git
 [submodule "bd_derrumbes"]
 	path = bases-de-datos/bases-de-datos/proyecto/avance-3/
 	url = git@github.com:MrDonkey08/bd_derrumbes.git
